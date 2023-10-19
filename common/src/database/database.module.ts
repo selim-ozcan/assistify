@@ -5,7 +5,7 @@ import { ModelDefinition, MongooseModule } from '@nestjs/mongoose';
 
 @Module({})
 export class DatabaseModule {
-  static forRoot(service: any): DynamicModule {
+  static forRoot(): DynamicModule {
     return {
       module: DatabaseModule,
       imports: [
@@ -13,7 +13,7 @@ export class DatabaseModule {
           useFactory: (configService: ConfigService) => ({
             uri: configService.get('MONGODB_URI'),
           }),
-          inject: [service],
+          inject: [ConfigService],
         }),
       ],
     };
