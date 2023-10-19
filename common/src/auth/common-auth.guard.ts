@@ -18,7 +18,7 @@ export class CommonAuthGuard implements CanActivate {
 
     return this.client.send<boolean>(
       { cmd: 'authorize' },
-      request.headers.authorization,
+      request.headers.authorization.split(' ')[1],
     );
   }
 }

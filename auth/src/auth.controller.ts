@@ -27,12 +27,10 @@ export class AuthController {
   }
 
   @MessagePattern({ cmd: 'authorize' })
-  async authorize(@Payload() authHeader: string) {
-    let token;
+  async authorize(@Payload() token: string) {
     try {
-      const jwt = authHeader.split(' ')[1];
-      token = await this.authService.validateToken(jwt);
-      if (token) return true;
+      const payload = await this.authService.validateToken(token);
+      if (payload) return true;
     } catch (error) {
       console.log(error);
       return false;
