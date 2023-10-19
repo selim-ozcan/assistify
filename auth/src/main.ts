@@ -11,14 +11,14 @@ async function bootstrap() {
   app.connectMicroservice({
     transport: Transport.TCP,
     options: {
-      host: configService.get('AUTH_SERVICE_TCP_HOST'),
-      port: +configService.get('AUTH_SERVICE_TCP_PORT'),
+      host: configService.get('TCP_HOST'),
+      port: +configService.get('TCP_PORT'),
     },
   });
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   app.useLogger(app.get(Logger));
 
   await app.startAllMicroservices();
-  await app.listen(configService.get('PORT'));
+  await app.listen(configService.get('HTTP_PORT'));
 }
 bootstrap();

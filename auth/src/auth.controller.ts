@@ -8,13 +8,8 @@ import {
 } from '@nestjs/common';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { AuthService } from './auth.service';
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { CurrentUser } from './decorators/current-user.decorator';
-import {
-  MessagePattern,
-  PatternMetadata,
-  Payload,
-} from '@nestjs/microservices';
+import { CurrentUser } from '@soassistify/common';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 
 @Controller('auth')
 export class AuthController {
@@ -26,11 +21,11 @@ export class AuthController {
     return await this.authService.login(user);
   }
 
-  @MessagePattern({ cmd: 'authorize' })
-  async authorize(@Payload() token: string) {
+  @MessagePattern('authenticate')
+  async authenticate(@Payload() token: string) {
     try {
       const payload = await this.authService.validateToken(token);
-      if (payload) return true;
+      if (payload) return { userId: payload.userId, email: payload.email };
     } catch (error) {
       console.log(error);
       return false;
