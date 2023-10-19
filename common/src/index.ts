@@ -4,3 +4,6 @@ export * from './database/abstract.schema';
 export * from './database/abstract.schema';
 
 export * from './logger/logger.module';
+
+export * from './auth/common-auth.guard';
+export * from './auth/common-auth.module';
