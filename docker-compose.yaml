@@ -32,3 +32,15 @@ services:
       - 3001:3001
     volumes:
       - ./auth:/usr/src/app
+  activity:
+    build:
+      context: activity
+      dockerfile: Dockerfile
+      target: development
+    command: npm run start:dev
+    env_file:
+      - ./activity/.env
+    ports:
+      - 3003:3003
+    volumes:
+      - ./activity:/usr/src/app
