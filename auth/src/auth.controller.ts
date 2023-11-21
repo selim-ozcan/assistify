@@ -5,11 +5,13 @@ import {
   Request,
   UnauthorizedException,
   Get,
+  Res,
 } from '@nestjs/common';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { AuthService } from './auth.service';
 import { CurrentUser } from '@soassistify/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -17,15 +19,25 @@ export class AuthController {
 
   @UseGuards(LocalAuthGuard)
   @Post('login')
-  async login(@CurrentUser() user) {
-    return await this.authService.login(user);
+  async login(@CurrentUser() user, @Res({ passthrough: true }) response) {
+    await this.authService.login(user, response);
+    response.send(user);
   }
 
+  @UseGuards(JwtAuthGuard)
   @MessagePattern('authenticate')
-  async authenticate(@Payload() token: string) {
+  async authenticate(@Payload() token: any) {
+    console.log(token.Authentication);
     try {
-      const payload = await this.authService.validateToken(token);
-      if (payload) return { userId: payload.userId, email: payload.email };
+      const payload = await this.authService.validateToken(
+        token.Authentication,
+      );
+      if (payload)
+        return {
+          userId: payload.userId,
+          email: payload.email,
+          role: payload.role,
+        };
     } catch (error) {
       console.log(error);
       return false;

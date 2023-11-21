@@ -42,5 +42,6 @@ services:
       - ./activity/.env
     ports:
       - 3003:3003
+      - 4000:4000
     volumes:
       - ./activity:/usr/src/app

@@ -1,0 +1,32 @@
+[
+  {
+    "price": 50,
+    "image": "https://images.unsplash.com/photo-1576566588028-4147f3842f27",
+    "shelf": "SH-05",
+    "stock": 16,
+    "color": "blue",
+    "material": "wool",
+    "type": "t-shirt",
+    "size": "M"
+  },
+  {
+    "price": 50,
+    "image": "https://as1.ftcdn.net/v2/jpg/00/52/07/58/1000_F_52075868_dZVYMUK1zqGtu4ADk8bUdOIxnTEkV4vz.jpg",
+    "shelf": "SH-17",
+    "stock": 7,
+    "color": "red",
+    "material": "wool",
+    "type": "sweater",
+    "size": "L"
+  },
+  {
+    "price": 75,
+    "image": "https://images.unsplash.com/photo-1592878849122-facb97520f9e",
+    "shelf": "SH-98",
+    "stock": 20,
+    "color": "black",
+    "material": "wool",
+    "type": "jacket",
+    "size": "L"
+  }
+]

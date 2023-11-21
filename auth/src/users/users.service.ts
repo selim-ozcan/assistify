@@ -11,10 +11,18 @@ export class UsersService {
     return this.usersRepository.create({
       ...createUserDto,
       password: await bcrypt.hash(createUserDto.password, 10),
+      role: createUserDto.role ?? 'customer',
     });
   }
 
   async findOne(email: string) {
     return this.usersRepository.findOne({ email });
+  }
+
+  async findAll() {
+    return (await this.usersRepository.find({})).map((el) => {
+      delete el.password;
+      return el;
+    });
   }
 }

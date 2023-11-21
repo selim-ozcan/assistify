@@ -7,6 +7,8 @@ import { Logger } from 'nestjs-pino';
 
 async function bootstrap() {
   const app = await NestFactory.create(ActivityModule);
+  app.enableCors();
+
   const configService = app.get(ConfigService);
   app.connectMicroservice({
     transport: Transport.TCP,
@@ -19,6 +21,7 @@ async function bootstrap() {
   app.useLogger(app.get(Logger));
 
   await app.startAllMicroservices();
+
   await app.listen(configService.get('HTTP_PORT'));
 }
 bootstrap();

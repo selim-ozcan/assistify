@@ -4,10 +4,28 @@ import { AbstractDocument } from '@soassistify/common';
 @Schema()
 export class ProductDocument extends AbstractDocument {
   @Prop()
-  name: string;
+  color: string;
 
   @Prop()
-  color: string;
+  price: number;
+
+  @Prop()
+  image: string;
+
+  @Prop()
+  shelf: string;
+
+  @Prop()
+  stock: string;
+
+  @Prop()
+  material: string;
+
+  @Prop()
+  type: string;
+
+  @Prop()
+  size: string;
 }
 
 export const ProductSchema = SchemaFactory.createForClass(ProductDocument);

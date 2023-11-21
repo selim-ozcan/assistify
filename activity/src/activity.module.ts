@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { ActivityController } from './activity.controller';
 import { ActivityService } from './activity.service';
 import { ConfigModule } from '@nestjs/config';
 import {
@@ -7,6 +6,8 @@ import {
   DatabaseModule,
   LoggerModule,
 } from '@soassistify/common';
+import { ActivityController } from './activity.controller';
+import { ActivityGateway } from './activity.gateway';
 
 @Module({
   imports: [
@@ -17,6 +18,6 @@ import {
     LoggerModule,
   ],
   controllers: [ActivityController],
-  providers: [ActivityService],
+  providers: [ActivityService, ActivityGateway],
 })
 export class ActivityModule {}

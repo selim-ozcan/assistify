@@ -5,8 +5,8 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { Request } from 'express';
-import { Observable, tap } from 'rxjs';
+
+import { Observable, map, tap } from 'rxjs';
 import { AUTH_SERVICE } from 'src/constants/services';
 
 @Injectable()
@@ -15,15 +15,13 @@ export class CommonAuthGuard implements CanActivate {
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
-    const request = context.switchToHttp().getRequest<Request>();
+    const jwt = context.switchToHttp().getRequest().cookies?.Authentication;
 
-    if (!request.headers.authorization) return false;
+    if (!jwt) return false;
 
-    return this.client
-      .send<boolean>(
-        'authenticate',
-        request.headers.authorization.split(' ')[1],
-      )
-      .pipe(tap((user) => (context.switchToHttp().getRequest().user = user)));
+    return this.client.send('authenticate', { Authentication: jwt }).pipe(
+      tap((user) => (context.switchToHttp().getRequest().user = user)),
+      map(() => true),
+    );
   }
 }

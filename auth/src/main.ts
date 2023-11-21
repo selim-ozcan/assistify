@@ -4,9 +4,15 @@ import { ValidationPipe } from '@nestjs/common';
 import { Logger } from 'nestjs-pino';
 import { ConfigService } from '@nestjs/config';
 import { Transport } from '@nestjs/microservices';
+import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AuthModule);
+  app.enableCors({
+    origin: ['http://localhost:3002', 'http://localhost:3000'],
+    credentials: true,
+  });
+  app.use(cookieParser());
   const configService = app.get(ConfigService);
   app.connectMicroservice({
     transport: Transport.TCP,
