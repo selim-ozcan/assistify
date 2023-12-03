@@ -195,7 +195,6 @@ export default function Navbar() {
   const { user, setUser } = useContext(UserContext);
   const [isNavOpen, setIsNavOpen] = React.useState(false);
   const router = useRouter();
-  console.log(router.pathname);
 
   const toggleIsNavOpen = () => setIsNavOpen((cur) => !cur);
 

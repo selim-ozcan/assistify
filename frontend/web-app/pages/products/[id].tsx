@@ -13,6 +13,9 @@ import {
   DialogBody,
   DialogFooter,
   Textarea,
+  Popover,
+  PopoverHandler,
+  PopoverContent,
 } from "@material-tailwind/react";
 import StarRating from "@/components/ui/StarRating";
 import Image from "next/image";
@@ -20,10 +23,19 @@ import { useParams, useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { useTimer } from "react-timer-hook";
 import toast, { Toaster } from "react-hot-toast";
+import { createHook } from "async_hooks";
 
 type ProductProps = {
   product: Product;
 };
+
+const quickQuestions = [
+  "asdfa asdfas sfafasf asdfasfa?",
+  "adfa asdfa sf asdfa asdf?",
+  "qaf asasfasdf asdfas ads?",
+  "sadfadf asdfasf afd?",
+  "asfa asdfas adf sdff?",
+];
 
 export default function Product() {
   const params = useParams();
@@ -37,26 +49,27 @@ export default function Product() {
   const [helpingEmployeeId, setHelpingEmployeeId] = useState(null);
   const [selectedProperties, setSelectedProperties] = useState([]);
   const [review, setReview] = useState("");
+  const [openPopover, setOpenPopover] = useState(false);
+  const [openQuickHelpPopover, setOpenQuickHelpPopover] = useState(false);
   const router = useRouter();
+  const [chosenQuickQuestion, setChosenQuickQuestion] = useState(null);
+  const [textQuickQuestion, setTextQuickQuestion] = useState("");
+  const [quickAnswerSeen, setQuickAnswerSeen] = useState(false);
+  const [quickAnswerArrived, setQuickAnswerArrived] = useState(false);
+  const [showQuickAnswer, setShowQuickAnswer] = useState(false);
+  const [quickAnswer, setQuickAnswer] = useState(null);
 
-  const {
-    totalSeconds,
-    seconds,
-    minutes,
-    hours,
-    days,
-    isRunning,
-    start,
-    pause,
-    resume,
-    restart,
-  } = useTimer({
+  const triggers = {
+    onMouseEnter: () => setOpenPopover(true),
+    onMouseLeave: () => setOpenPopover(false),
+  };
+
+  const { seconds, restart } = useTimer({
     expiryTimestamp: new Date(),
     onExpire: () => {
       if (!helpComing) {
         setHelpRequested(false);
         setHelpComing(false);
-        console.log("asdasd");
       }
     },
   });
@@ -66,6 +79,21 @@ export default function Product() {
       setHelpingEmployeeId(data.employeeId);
       setVisible(false);
       setHelpComing(true);
+      if (
+        data.quickAnswer !== null &&
+        data.quickAnswer !== undefined &&
+        data.quickAnswer !== ""
+      ) {
+        toast.success(
+          `${
+            data.email.slice(0, 6) + "******.com"
+          } has answered your question!`,
+          { duration: 4000 }
+        );
+        setQuickAnswerArrived(true);
+        setQuickAnswerSeen(false);
+        setQuickAnswer(data.quickAnswer);
+      }
     }
 
     socket.on("help-coming", listener);
@@ -101,11 +129,6 @@ export default function Product() {
   function onRate(rating) {
     setShowRating(false);
     setRate(rating);
-    console.log({
-      customerId: user.userId,
-      employeeId: helpingEmployeeId,
-      rate: rating,
-    });
     fetch(`http://localhost:3000/rating`, {
       credentials: "include",
       method: "POST",
@@ -117,7 +140,7 @@ export default function Product() {
         review: review,
       }),
     }).then(() => {
-      toast(`Thanks for rating!`);
+      toast.success(`Thanks for rating!`);
     });
   }
 
@@ -129,6 +152,31 @@ export default function Product() {
     );
 
     router.push("/products?" + query);
+  }
+
+  function sendQuickQuestion() {
+    let question;
+    if (textQuickQuestion !== "") {
+      question = textQuickQuestion;
+    } else if (chosenQuickQuestion !== null) {
+      question = quickQuestions[chosenQuickQuestion];
+    }
+
+    setHelpRequested((prev) => !prev);
+
+    socket.emit("help-requested", {
+      userId: user.userId,
+      shelf: product.shelf,
+      email: user.email,
+      quickQuestion: question,
+    });
+
+    const time = new Date();
+    time.setSeconds(time.getSeconds() + 15);
+    restart(time);
+
+    setOpenPopover(false);
+    setOpenQuickHelpPopover(false);
   }
 
   if (!product) return <h1>loading...</h1>;
@@ -244,36 +292,125 @@ export default function Product() {
           </div>
         </CardBody>
         <CardFooter className="pt-0">
-          <Button
-            disabled={helpRequested || helpComing}
-            ripple={false}
-            fullWidth={true}
-            className={` text-black mx-auto w-2/3 shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100 ${
-              visible ? "" : "hidden"
-            } ${
-              helpRequested
-                ? helpComing
-                  ? "bg-blue-400"
-                  : seconds > 0 && seconds <= 5
-                  ? "bg-red-400"
-                  : "bg-green-500"
-                : "bg-blue-gray-200"
-            }`}
-            onClick={() => requestHelp()}
-          >
-            {helpRequested ? `Help Requested: ${seconds} s` : "Request Help"}
-          </Button>
+          <Popover open={openPopover} handler={setOpenPopover}>
+            <PopoverHandler {...triggers}>
+              <Button
+                disabled={helpRequested || helpComing}
+                ripple={false}
+                fullWidth={true}
+                className={` text-black bg-blue-gray-200 mx-auto w-2/3 shadow-none  hover:shadow-none  focus:shadow-none active:scale-100
+                ${
+                  helpRequested
+                    ? helpComing
+                      ? "bg-blue-400"
+                      : seconds > 0 && seconds <= 5
+                      ? "bg-red-400"
+                      : "bg-green-500"
+                    : "bg-blue-gray-200"
+                } ${
+                  openPopover
+                    ? "bg-blue-gray-50 border-blue-gray-800 border"
+                    : ""
+                }
+                ${visible ? "" : "hidden"}`}
+              >
+                {helpRequested
+                  ? `Help Requested: ${seconds} s`
+                  : "Request Help"}
+              </Button>
+            </PopoverHandler>
+            <PopoverContent
+              {...triggers}
+              className="z-[80] w-[22rem] bg-gradient-to-br from-light-green-400 to-teal-400 shadow-lg shadow-blue-gray-700 border border-green-900 py-3"
+            >
+              <div className="mb-0 mt-0 py-0 flex items-center justify-between gap-4">
+                <Button
+                  className={`border border-green-900 bg-blue-gray-50 text-black mx-auto w-2/5  active:scale-100 normal-case  `}
+                  onClick={() => {
+                    setOpenPopover(false);
+                    requestHelp();
+                  }}
+                >
+                  Face to Face
+                </Button>
+                <Popover>
+                  <PopoverHandler
+                    onClick={() => {
+                      setOpenQuickHelpPopover(true);
+                    }}
+                  >
+                    <Button
+                      className={`border border-green-900 bg-blue-gray-50 text-black mx-auto w-2/5  normal-case active:scale-100 
+                   `}
+                    >
+                      Quick Help
+                    </Button>
+                  </PopoverHandler>
+                  <PopoverContent className="z-[150] w-[20rem] -mx-10 -my-4 bg-light-green-600 shadow-lg text-center shadow-blue-gray-700 border border-green-900 bg-gradient-to-br from-light-green-600 to-teal-600">
+                    <h2 className="text-blue-gray-50 ">
+                      Select a question from the list below
+                    </h2>
+                    <div className="max-h-40 overflow-scroll  border border-black rounded-md mt-2 mb-2 px-1">
+                      {quickQuestions.map((question, index) => (
+                        <Button
+                          onClick={() => setChosenQuickQuestion(index)}
+                          key={index}
+                          className={`mt-2 inline-block w-full normal-case first-letter:uppercase bg-blue-gray-900 last:mb-2 ${
+                            index === chosenQuickQuestion
+                              ? "bg-gradient-to-br from-light-green-400 to-light-green-700 border  border-white"
+                              : ""
+                          }`}
+                        >
+                          {question}
+                        </Button>
+                      ))}
+                    </div>
+                    <h4 className="text-blue-gray-50 mb-1">Or,</h4>
+
+                    <Textarea
+                      onChange={(e) => setTextQuickQuestion(e.target.value)}
+                      label={"Write your own question"}
+                      className="!bg-blue-gray-50 max-h-20"
+                    ></Textarea>
+                    <Button
+                      onClick={() => sendQuickQuestion()}
+                      className={`bg-blue-gray-900 ${
+                        chosenQuickQuestion === null && textQuickQuestion === ""
+                          ? "disabled"
+                          : ""
+                      }`}
+                    >
+                      Send
+                    </Button>
+                  </PopoverContent>
+                </Popover>
+              </div>
+            </PopoverContent>
+          </Popover>
+
           <Button
             ripple={false}
             fullWidth={true}
             className={` text-black mx-auto w-2/3  shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100 ${
               rate ? "hidden" : ""
-            } ${"bg-orange-300"} ${helpComing ? "" : "hidden"}`}
+            } ${"bg-orange-300"} ${helpComing ? "" : "hidden"} ${
+              quickAnswerArrived && !quickAnswerSeen ? "bg-teal-200" : ""
+            }`}
             onClick={() => {
-              setShowRating(true);
+              if (quickAnswerArrived && !quickAnswerSeen) {
+                setShowQuickAnswer(true);
+              } else if (quickAnswerArrived && quickAnswerSeen) {
+                setShowRating(true);
+              } else if (!quickAnswerArrived) {
+                setShowRating(true);
+              }
             }}
           >
-            Rate your experience
+            {quickAnswerArrived && !quickAnswerSeen ? "See Quick Response" : ""}
+            {quickAnswerArrived && quickAnswerSeen
+              ? "Rate your experience"
+              : ""}
+            {!quickAnswerArrived ? "Rate your experience" : ""}
           </Button>
           <Toaster></Toaster>
         </CardFooter>
@@ -296,6 +433,48 @@ export default function Product() {
           </Button> */}
         </DialogFooter>
       </Dialog>
+      <Dialog
+        open={showQuickAnswer}
+        handler={() => {
+          setQuickAnswerSeen(true);
+          setShowQuickAnswer(false);
+        }}
+      >
+        <DialogHeader className="flex justify-center">
+          Your question is replied!
+        </DialogHeader>
+        <DialogBody className="flex justify-center flex-col items-center">
+          <span className="italic font-extralight">Your question:</span>
+          <div className="mt-4 p-1 self-start border rounded-md border-light-green-600 w-[95%] mx-auto  shadow-md shadow-blue-gray-600 mb-4">
+            <Typography variant="h5" className="capitalize text-blue-gray-900">
+              &rarr;{" "}
+              {chosenQuickQuestion !== null
+                ? quickQuestions[chosenQuickQuestion]
+                : textQuickQuestion}
+            </Typography>
+          </div>
+          <span className="italic font-extralight">And the answer is:</span>
+          <div className="mt-4 p-1 self-start border rounded-md border-light-green-600 w-[95%] mx-auto  shadow-md shadow-blue-gray-600">
+            <Typography variant="h5" className="capitalize text-blue-gray-900">
+              &rarr; {quickAnswer}
+            </Typography>
+          </div>
+          <Button
+            onClick={() => {
+              setQuickAnswerSeen(true);
+              setShowQuickAnswer(false);
+            }}
+            className="mt-8 mb-4 normal-case"
+          >
+            Got It 👍🏻
+          </Button>
+        </DialogBody>
+      </Dialog>
+      <div
+        className={`absolute top-0 left-0 w-screen h-screen bg-blue-gray-50 z-[70] opacity-50 ${
+          openPopover ? "" : "hidden"
+        }`}
+      ></div>
     </div>
   );
 }

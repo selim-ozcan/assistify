@@ -29,7 +29,6 @@ export default function EmployeeStats() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setStats(data);
       });
 
@@ -41,11 +40,9 @@ export default function EmployeeStats() {
   }, []);
 
   function calculateStats(employeeId) {
-    console.log(employeeId);
     const employeeStats = stats.filter(
       (stat) => stat.employeeId === employeeId
     );
-    console.log(employeeStats);
     const totalRatingsForTheEmployee = employeeStats.reduce(
       (prev, curr) => +prev + +curr.rate,
       0
@@ -64,6 +61,11 @@ export default function EmployeeStats() {
     setReviewOfUser(id);
     setShowReview(true);
   }
+
+  const handleOpen = (id) => {
+    if (id) setReviewOfUser(id);
+    setShowReview((prev) => !prev);
+  };
 
   return (
     <>
@@ -132,7 +134,7 @@ export default function EmployeeStats() {
                         variant="small"
                         color="blue-gray"
                         className="font-extrabold text-sm text-center active:text-blue-600"
-                        onClick={() => onShowReview(user._id)}
+                        onClick={() => handleOpen(user._id)}
                       >
                         Reviews
                       </Typography>
@@ -144,8 +146,9 @@ export default function EmployeeStats() {
           </tbody>
         </table>
       </Card>
-      <Dialog open={showReview} handler={() => {}} className={""}>
+      <Dialog open={showReview} handler={handleOpen} className="relative">
         <DialogBody className="h-[38rem] rounded-md flex flex-col items-center overflow-scroll bg-blue-gray-50">
+          <h2 className="font-extrabold">Reviews</h2>
           {stats
             .filter((stat) => stat.employeeId === reviewOfUser)
             .map((review) => (
@@ -193,10 +196,10 @@ export default function EmployeeStats() {
               </Card>
             ))}
           <Button
-            className={"absolute bottom-4 left-[50%] -translate-x-[50%]"}
+            className={"mt-8 shadow-lg shadow-blue-gray-400"}
             ripple={true}
             color="red"
-            onClick={() => setShowReview(false)}
+            onClick={handleOpen}
           >
             Close
           </Button>

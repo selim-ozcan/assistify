@@ -29,9 +29,10 @@ export default function SignIn() {
       })
         .then((res) => res.json())
         .then((user) => {
-          console.log(user);
           setUser(user);
-          router.push("/products/scanner");
+          if (user.role === "customer") router.push("/products/scanner");
+          if (user.role === "employee") router.push("/queue");
+          if (user.role === "manager") router.push("/employee-stats");
         });
     },
     [email, password, router, setUser]

@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsString, IsOptional } from 'class-validator';
 
 export class RequestHelpDto {
   @IsString()
@@ -12,4 +12,8 @@ export class RequestHelpDto {
   @IsString()
   @IsNotEmpty()
   email: string;
+
+  @IsString()
+  @IsOptional()
+  quickQuestion: string;
 }

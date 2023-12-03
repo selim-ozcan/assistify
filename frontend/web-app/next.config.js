@@ -5,7 +5,12 @@ const nextConfig = {
   },
   reactStrictMode: false,
   images: {
-    domains: ["tailwindui.com", "images.unsplash.com", "as1.ftcdn.net"],
+    domains: [
+      "tailwindui.com",
+      "images.unsplash.com",
+      "as1.ftcdn.net",
+      "plus.unsplash.com",
+    ],
     dangerouslyAllowSVG: true,
   },
 };
