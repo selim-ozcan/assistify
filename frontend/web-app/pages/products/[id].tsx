@@ -16,6 +16,8 @@ import {
   Popover,
   PopoverHandler,
   PopoverContent,
+  Carousel,
+  Radio,
 } from "@material-tailwind/react";
 import StarRating from "@/components/ui/StarRating";
 import Image from "next/image";
@@ -59,6 +61,11 @@ export default function Product() {
   const [showQuickAnswer, setShowQuickAnswer] = useState(false);
   const [quickAnswer, setQuickAnswer] = useState(null);
 
+  const [choosenColor, setChoosenColor] = useState(null);
+  const [choosenSize, setChoosenSize] = useState(null);
+
+  console.log(choosenSize);
+  console.log(choosenColor);
   const triggers = {
     onMouseEnter: () => setOpenPopover(true),
     onMouseLeave: () => setOpenPopover(false),
@@ -190,19 +197,26 @@ export default function Product() {
           selectedProperties.length > 0
             ? "bg-opacity-50"
             : "opacity-0 invisible"
-        } absolute left-[50%] -translate-x-[50%] top-8 z-50 bg-gradient-to-r  from-teal-300 to-teal-200`}
+        } absolute left-[50%] -translate-x-[50%] top-[2px] z-50 bg-gradient-to-r  from-teal-300 to-teal-200`}
         onClick={() => searchSimilarProducts()}
       >
         {"See similar products"}
       </Button>
       <Card className="h-[75vh] md:w-auto lg:w-6/12 mt-1 mx-1 overflow-scroll">
-        <Image
-          height={300}
-          width={300}
-          src={product.image}
-          alt="card-image"
-          className="mx-auto my-4 rounded-md"
-        />
+        <div className="h-[350px] w-[90%] mx-auto mt-[50px]">
+          <Carousel className="rounded-xl" loop>
+            {product.images.map((image) => (
+              <Image
+                key={image}
+                height={300}
+                width={300}
+                src={image}
+                alt="card-image"
+                className=" h-full w-full object-cover"
+              />
+            ))}
+          </Carousel>
+        </div>
 
         <CardBody>
           <div className="mb-2 flex items-center justify-between mx-4">
@@ -222,49 +236,99 @@ export default function Product() {
           <div className="flex flex-col mt-8">
             <div className="px-8 py-2 mb-2 mx-4 border border-teal-200 text-gray-900 rounded-md p-2 flex items-center justify-between bg-gradient-to-r from-light-green-300 to-light-green-200 shadow-md">
               <span>Stock:</span>
-              <span className="capitalize">{product.stock}</span>
+              <span className="capitalize">
+                {choosenSize !== null && choosenColor !== null
+                  ? product.stocks[choosenSize][choosenColor]
+                  : product.stocks[0][0]}
+              </span>
             </div>
             <div
-              className={`px-8 py-2 mb-2 mx-4 border border-teal-200 text-gray-900 rounded-md p-2 flex items-center justify-between shadow-md bg-gradient-to-r transition-all duration-300 ${
-                selectedProperties.findIndex((attr) =>
-                  attr.hasOwnProperty("size")
-                ) !== -1
-                  ? "from-teal-300 to-teal-200 scale-105"
-                  : "from-light-green-300 to-light-green-200"
-              }`}
-              onClick={() => {
-                setSelectedProperties((prev) => {
-                  if (prev.find((attr) => attr.hasOwnProperty("size"))) {
-                    return prev.filter((attr) => !attr.hasOwnProperty("size"));
-                  } else {
-                    return [...prev, { size: product.size }];
-                  }
-                });
-              }}
+              className={`px-8 py-2 mb-2 mx-4 border border-teal-200 text-gray-900 rounded-md p-2 flex items-center justify-between shadow-md bg-gradient-to-r from-light-green-300 to-light-green-200`}
             >
-              <span>Size:</span>
-              <span className="capitalize">{product.size}</span>
+              <span>Sizes:</span>
+              <div className="-my-2">
+                {product.sizes.map((size, index) => (
+                  <Radio
+                    key={size}
+                    name="size"
+                    ripple={true}
+                    className={`border-black ${
+                      selectedProperties.findIndex((attr) =>
+                        attr.hasOwnProperty("size")
+                      ) !== -1 && product.sizes[choosenSize] === size
+                        ? " outline outline-8 outline-teal-300"
+                        : ""
+                    }`}
+                    labelProps={{ className: "text-black" }}
+                    label={size}
+                    onClick={() => {
+                      setSelectedProperties((prev) => {
+                        if (
+                          prev.find((attr) => attr.hasOwnProperty("size")) &&
+                          prev.find((attr) => attr.hasOwnProperty("size"))
+                            .size === size
+                        ) {
+                          return prev.filter(
+                            (attr) => !attr.hasOwnProperty("size")
+                          );
+                        } else {
+                          setChoosenSize(index);
+                          return [
+                            ...prev.filter(
+                              (attr) => !attr.hasOwnProperty("size")
+                            ),
+                            { size: product.sizes[index] },
+                          ];
+                        }
+                      });
+                    }}
+                  ></Radio>
+                ))}
+              </div>
             </div>
             <div
-              className={`px-8 py-2 mb-2 mx-4 border border-teal-200 text-gray-900 rounded-md p-2 flex items-center justify-between shadow-md bg-gradient-to-r from-light-green-300 to-light-green-200 transition-all duration-300 ${
-                selectedProperties.findIndex((attr) =>
-                  attr.hasOwnProperty("color")
-                ) !== -1
-                  ? "from-teal-300 to-teal-200 scale-105"
-                  : "from-light-green-300 to-light-green-200"
-              }`}
-              onClick={() => {
-                setSelectedProperties((prev) => {
-                  if (prev.find((attr) => attr.hasOwnProperty("color"))) {
-                    return prev.filter((attr) => !attr.hasOwnProperty("color"));
-                  } else {
-                    return [...prev, { color: product.color }];
-                  }
-                });
-              }}
+              className={`px-8 py-2 mb-2 mx-4 border border-teal-200 text-gray-900 rounded-md p-2 flex items-center justify-between shadow-md bg-gradient-to-r from-light-green-300 to-light-green-200 transition-all duration-300`}
             >
-              <span>Color:</span>
-              <span className="capitalize">{product.color}</span>
+              <span>Colors:</span>
+              <div className="flex -mx-4 -my-2">
+                {product.colors.map((color, index) => (
+                  <Radio
+                    key={color}
+                    name={color}
+                    color={color}
+                    defaultChecked={true}
+                    className={`${
+                      selectedProperties.findIndex((attr) =>
+                        attr.hasOwnProperty("color")
+                      ) !== -1 && product.colors[choosenColor] === color
+                        ? " outline outline-8 outline-teal-300"
+                        : ""
+                    }`}
+                    ripple={true}
+                    onClick={() => {
+                      setSelectedProperties((prev) => {
+                        if (
+                          prev.find((attr) => attr.hasOwnProperty("color")) &&
+                          prev.find((attr) => attr.hasOwnProperty("color"))
+                            .color === color
+                        ) {
+                          return prev.filter(
+                            (attr) => !attr.hasOwnProperty("color")
+                          );
+                        } else {
+                          setChoosenColor(index);
+                          return [
+                            ...prev.filter(
+                              (attr) => !attr.hasOwnProperty("color")
+                            ),
+                            { color: product.colors[index] },
+                          ];
+                        }
+                      });
+                    }}
+                  ></Radio>
+                ))}
+              </div>
             </div>
             <div
               className={`px-8 py-2 mb-2 mx-4 border border-teal-200 text-gray-900 rounded-md p-2 flex items-center justify-between shadow-md bg-gradient-to-r transition-all duration-300 ${

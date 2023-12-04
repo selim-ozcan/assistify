@@ -1,102 +1,19 @@
 [
   {
     "price": 50,
-    "image": "https://images.unsplash.com/photo-1576566588028-4147f3842f27",
-    "shelf": "SH-05",
-    "stock": 16,
-    "color": "blue",
-    "material": "wool",
-    "type": "t-shirt",
-    "size": "M"
-  },
-  {
-    "price": 50,
-    "image": "https://as1.ftcdn.net/v2/jpg/00/52/07/58/1000_F_52075868_dZVYMUK1zqGtu4ADk8bUdOIxnTEkV4vz.jpg",
-    "shelf": "SH-17",
-    "stock": 7,
-    "color": "red",
+    "shelf": "SH-01",
     "material": "wool",
     "type": "sweater",
-    "size": "L"
-  },
-  {
-    "price": 75,
-    "image": "https://images.unsplash.com/photo-1592878849122-facb97520f9e",
-    "shelf": "SH-98",
-    "stock": 20,
-    "color": "black",
-    "material": "wool",
-    "type": "jacket",
-    "size": "L"
-  },
-  {
-    "price": 30,
-    "image": "https://images.unsplash.com/photo-1618354691551-44de113f0164",
-    "shelf": "SH-21",
-    "stock": 12,
-    "color": "black",
-    "material": "cotton",
-    "type": "long sleeve t-shirt",
-    "size": "S"
-  },
-  {
-    "price": 45,
-    "image": "https://plus.unsplash.com/premium_photo-1675186049366-64a655f8f537",
-    "shelf": "SH-03",
-    "stock": 32,
-    "color": "pink",
-    "material": "cotton",
-    "type": "jacket",
-    "size": "S"
-  },
-  {
-    "price": 30,
-    "image": "https://images.unsplash.com/photo-1562262199-f6b3dfb3ec43",
-    "shelf": "SH-88",
-    "stock": 32,
-    "color": "orange",
-    "material": "wool",
-    "type": "sweater",
-    "size": "S"
-  },
-  {
-    "price": 20,
-    "image": "https://images.unsplash.com/photo-1618354691373-d851c5c3a990",
-    "shelf": "SH-13",
-    "stock": 6,
-    "color": "black",
-    "material": "cotton",
-    "type": "t-shirt",
-    "size": "M"
-  },
-  {
-    "price": 40,
-    "image": "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80",
-    "shelf": "SH-38",
-    "stock": 9,
-    "color": "blue",
-    "material": "denim",
-    "type": "trousers",
-    "size": "M"
-  },
-  {
-    "price": 60,
-    "image": "https://images.unsplash.com/photo-1551028719-00167b16eac5",
-    "shelf": "SH-73",
-    "stock": 3,
-    "color": "black",
-    "material": "leather",
-    "type": "jacket",
-    "size": "L"
-  },
-  {
-    "price": 55,
-    "image": "https://images.unsplash.com/photo-1638394440667-aa54a7c0a703",
-    "shelf": "SH-41",
-    "stock": 9,
-    "color": "bordeaux",
-    "material": "velvet",
-    "type": "trousers",
-    "size": "L"
+    "images": [
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty670/product/media/images/20221230/17/249457503/663842303/1/1_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty671/product/media/images/20221230/17/249436404/663830414/1/1_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty669/product/media/images/20221230/17/249435005/663829776/1/1_org_zoom.jpg"
+    ],
+    "sizes": ["M", "L"],
+    "colors": ["green", "yellow", "orange"],
+    "stocks": [
+      [13, 4, 2],
+      [3, 21, 7]
+    ]
   }
 ]

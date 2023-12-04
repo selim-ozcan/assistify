@@ -1,20 +1,11 @@
-import { IsNumber, IsString } from 'class-validator';
+import { IsArray, IsNumber, IsString } from 'class-validator';
 
 export class CreateProductDto {
-  @IsString()
-  color: string;
-
   @IsNumber()
   price: number;
 
   @IsString()
-  image: string;
-
-  @IsString()
   shelf: string;
-
-  @IsNumber()
-  stock: string;
 
   @IsString()
   material: string;
@@ -22,6 +13,15 @@ export class CreateProductDto {
   @IsString()
   type: string;
 
-  @IsString()
-  size: string;
+  @IsArray()
+  images: string[];
+
+  @IsArray()
+  sizes: string[];
+
+  @IsArray()
+  colors: string[];
+
+  @IsArray()
+  stocks: number[];
 }

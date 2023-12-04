@@ -10,6 +10,7 @@ const nextConfig = {
       "images.unsplash.com",
       "as1.ftcdn.net",
       "plus.unsplash.com",
+      "cdn.dsmcdn.com",
     ],
     dangerouslyAllowSVG: true,
   },

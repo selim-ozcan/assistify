@@ -26,7 +26,7 @@ export class ProductsController {
   @Get()
   findAll(
     @Query()
-    filter: Partial<Pick<CreateProductDto, 'color' | 'material' | 'size'>>,
+    filter: Partial<Pick<CreateProductDto, 'colors' | 'material' | 'sizes'>>,
   ) {
     return this.productsService.findAll(filter);
   }
