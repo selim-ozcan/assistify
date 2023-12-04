@@ -28,6 +28,12 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
   }
 
   async find(filterQuery: FilterQuery<TDocument>) {
-    return this.model.find(filterQuery, {}, { lean: true });
+    const filter: any = {};
+
+    if (filterQuery.material) filter.material = { $eq: filterQuery.material };
+    if (filterQuery.size) filter.sizes = { $in: [filterQuery.size] };
+    if (filterQuery.color) filter.colors = { $in: [filterQuery.color] };
+
+    return await this.model.find(filter);
   }
 }

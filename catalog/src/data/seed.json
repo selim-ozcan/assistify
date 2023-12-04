@@ -15,5 +15,24 @@
       [13, 4, 2],
       [3, 21, 7]
     ]
+  },
+  {
+    "price": 70,
+    "shelf": "SH-02",
+    "material": "wool",
+    "type": "sweater",
+    "images": [
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty536/product/media/images/20220916/10/175927981/11747646/1/1_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty671/product/media/images/20221230/17/249436564/663830538/1/1_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty534/product/media/images/20220916/19/176173482/11833842/1/1_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty536/product/media/images/20220916/10/175927971/11833837/1/1_org_zoom.jpg"
+    ],
+    "sizes": ["S", "M", "L"],
+    "colors": ["red", "gray", "green", "yellow"],
+    "stocks": [
+      [21, 4, 8, 35],
+      [54, 45, 6, 9],
+      [8, 3, 5, 9]
+    ]
   }
 ]

@@ -12,6 +12,7 @@ import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { CommonAuthGuard } from '@soassistify/common';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { SearchFilterDto } from './dto/search-filter.dto';
 
 @Controller('products')
 export class ProductsController {
@@ -26,7 +27,7 @@ export class ProductsController {
   @Get()
   findAll(
     @Query()
-    filter: Partial<Pick<CreateProductDto, 'colors' | 'material' | 'sizes'>>,
+    filter: Partial<SearchFilterDto>, //Partial<Pick<CreateProductDto, 'colors' | 'material' | 'sizes'>>,
   ) {
     return this.productsService.findAll(filter);
   }

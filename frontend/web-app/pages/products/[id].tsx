@@ -197,7 +197,7 @@ export default function Product() {
           selectedProperties.length > 0
             ? "bg-opacity-50"
             : "opacity-0 invisible"
-        } absolute left-[50%] -translate-x-[50%] top-[2px] z-50 bg-gradient-to-r  from-teal-300 to-teal-200`}
+        } absolute left-[50%] -translate-x-[50%] top-[2px] z-[150] bg-gradient-to-r  from-teal-300 to-teal-200`}
         onClick={() => searchSimilarProducts()}
       >
         {"See similar products"}
@@ -205,7 +205,7 @@ export default function Product() {
       <Card className="h-[75vh] md:w-auto lg:w-6/12 mt-1 mx-1 overflow-scroll">
         <div className="h-[350px] w-[90%] mx-auto mt-[50px]">
           <Carousel className="rounded-xl" loop>
-            {product.images.map((image) => (
+            {product.images?.map((image) => (
               <Image
                 key={image}
                 height={300}
@@ -228,26 +228,35 @@ export default function Product() {
             </Typography>
             <Typography
               color="blue-gray"
-              className="font-extrabold text-lg bg-yellow-200 rounded-full p-2"
+              className="font-extrabold text-lg bg-yellow-200 rounded-full p-2 border border-yellow-700"
             >
               {product.price + " $"}
             </Typography>
           </div>
           <div className="flex flex-col mt-8">
-            <div className="px-8 py-2 mb-2 mx-4 border border-teal-200 text-gray-900 rounded-md p-2 flex items-center justify-between bg-gradient-to-r from-light-green-300 to-light-green-200 shadow-md">
+            <div className="px-8 py-2 mb-2 mx-4 border border-teal-200 text-gray-900 rounded-md p-2 flex items-center justify-between bg-gradient-to-r from-[#d4fc79] to-[#96e6a1] shadow-md">
+              <span>Shelf:</span>
+              <span className="capitalize">{product.shelf}</span>
+            </div>
+            <div className="px-8 py-2 mb-2 mx-4 border border-teal-200 text-gray-900 rounded-md p-2 flex items-center justify-between bg-gradient-to-r from-[#d4fc79] to-[#96e6a1] shadow-md">
               <span>Stock:</span>
               <span className="capitalize">
-                {choosenSize !== null && choosenColor !== null
-                  ? product.stocks[choosenSize][choosenColor]
-                  : product.stocks[0][0]}
+                {selectedProperties.findIndex((attr) =>
+                  attr.hasOwnProperty("size")
+                ) === -1 ||
+                selectedProperties.findIndex((attr) =>
+                  attr.hasOwnProperty("color")
+                ) === -1
+                  ? "-"
+                  : product.stocks[choosenSize][choosenColor]}
               </span>
             </div>
             <div
-              className={`px-8 py-2 mb-2 mx-4 border border-teal-200 text-gray-900 rounded-md p-2 flex items-center justify-between shadow-md bg-gradient-to-r from-light-green-300 to-light-green-200`}
+              className={`px-8 py-2 mb-2 mx-4 border border-teal-200 text-gray-900 rounded-md p-2 flex items-center justify-between shadow-md bg-gradient-to-r from-[#d4fc79] to-[#96e6a1]`}
             >
               <span>Sizes:</span>
               <div className="-my-2">
-                {product.sizes.map((size, index) => (
+                {product.sizes?.map((size, index) => (
                   <Radio
                     key={size}
                     name="size"
@@ -287,11 +296,11 @@ export default function Product() {
               </div>
             </div>
             <div
-              className={`px-8 py-2 mb-2 mx-4 border border-teal-200 text-gray-900 rounded-md p-2 flex items-center justify-between shadow-md bg-gradient-to-r from-light-green-300 to-light-green-200 transition-all duration-300`}
+              className={`px-8 py-2 mb-2 mx-4 border border-teal-200 text-gray-900 rounded-md p-2 flex items-center justify-between shadow-md bg-gradient-to-r from-[#d4fc79] to-[#96e6a1] transition-all duration-300`}
             >
               <span>Colors:</span>
               <div className="flex -mx-4 -my-2">
-                {product.colors.map((color, index) => (
+                {product.colors?.map((color, index) => (
                   <Radio
                     key={color}
                     name={color}
@@ -336,7 +345,7 @@ export default function Product() {
                   attr.hasOwnProperty("material")
                 ) !== -1
                   ? "from-teal-300 to-teal-200 scale-105"
-                  : "from-light-green-300 to-light-green-200"
+                  : "from-[#d4fc79] to-[#96e6a1]"
               }`}
               onClick={() => {
                 setSelectedProperties((prev) => {
@@ -512,9 +521,9 @@ export default function Product() {
           <div className="mt-4 p-1 self-start border rounded-md border-light-green-600 w-[95%] mx-auto  shadow-md shadow-blue-gray-600 mb-4">
             <Typography variant="h5" className="capitalize text-blue-gray-900">
               &rarr;{" "}
-              {chosenQuickQuestion !== null
-                ? quickQuestions[chosenQuickQuestion]
-                : textQuickQuestion}
+              {textQuickQuestion !== null && textQuickQuestion !== ""
+                ? textQuickQuestion
+                : quickQuestions[chosenQuickQuestion]}
             </Typography>
           </div>
           <span className="italic font-extralight">And the answer is:</span>
