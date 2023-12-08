@@ -34,9 +34,9 @@ type ProductProps = {
 const quickQuestions = [
   "asdfa asdfas sfafasf asdfasfa?",
   "adfa asdfa sf asdfa asdf?",
-  "qaf asasfasdf asdfas ads?",
-  "sadfadf asdfasf afd?",
-  "asfa asdfas adf sdff?",
+  "Is the material used in this product 100% pure?",
+  "Which year's creation does this product belong to?",
+  "What are the return conditions for this product?",
 ];
 
 export default function Product() {
@@ -176,6 +176,7 @@ export default function Product() {
       shelf: product.shelf,
       email: user.email,
       quickQuestion: question,
+      product: product,
     });
 
     const time = new Date();

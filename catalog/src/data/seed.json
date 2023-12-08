@@ -28,11 +28,375 @@
       "https://cdn.dsmcdn.com/mnresize/1200/1800/ty536/product/media/images/20220916/10/175927971/11833837/1/1_org_zoom.jpg"
     ],
     "sizes": ["S", "M", "L"],
-    "colors": ["red", "gray", "green", "yellow"],
+    "colors": ["red", "grey", "green", "yellow"],
     "stocks": [
       [21, 4, 8, 35],
       [54, 45, 6, 9],
       [8, 3, 5, 9]
     ]
+  },
+  {
+    "price": 30,
+    "shelf": "SH-03",
+    "material": "tricot",
+    "type": "sweater",
+    "images": [
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty1069/product/media/images/prod/SPM/PIM/20231129/13/6d9239bf-5024-37f5-afab-561796f698ac/1_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty1074/product/media/images/prod/SPM/PIM/20231129/13/5cd88cf0-e061-3892-93a1-1e71dba2dafa/1_org_zoom.jpg"
+    ],
+    "sizes": ["S", "M"],
+    "colors": ["yellow", "pink"],
+    "stocks": [
+      [9, 6],
+      [7, 4]
+    ]
+  },
+  {
+    "price": 45,
+    "shelf": "SH-04",
+    "material": "cotton",
+    "type": "shirt",
+    "images": [
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty1082/product/media/images/prod/SPM/PIM/20231207/10/8b811eeb-384f-3fde-a00e-46989c6823a0/1_org_zoom.jpg"
+    ],
+    "sizes": ["S", "M", "L"],
+    "colors": ["black"],
+    "stocks": [[7], [4], [2]]
+  },
+  {
+    "price": 40,
+    "shelf": "SH-05",
+    "material": "viscose",
+    "type": "trousers",
+    "images": [
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty922/product/media/images/20230531/13/372326273/959347713/1/1_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty921/product/media/images/20230531/6/372019658/959001914/1/1_org_zoom.jpg"
+    ],
+    "sizes": ["M", "L"],
+    "colors": ["pink", "orange"],
+    "stocks": [
+      [7, 13],
+      [21, 17]
+    ]
+  },
+  {
+    "price": 42,
+    "shelf": "SH-06",
+    "material": "linen",
+    "type": "trousers",
+    "images": [
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty922/product/media/images/20230531/7/372065854/959061295/1/1_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty522/product/media/images/20220904/2/168971694/558757323/1/1_org_zoom.jpg"
+    ],
+    "sizes": ["S", "L"],
+    "colors": ["green", "brown"],
+    "stocks": [
+      [4, 7],
+      [11, 19]
+    ]
+  },
+  {
+    "price": 50,
+    "shelf": "SH-07",
+    "material": "cotton",
+    "type": "shirt",
+    "images": [
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty692/product/media/images/20230116/13/259785136/126125135/3/3_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty990/product/media/images/jpim-outputs/assets/product/media/images/20230829/14/408987211/928401220/2/2_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty975/product/media/images/20230802/14/399394496/928401002/4/4_org_zoom.jpg"
+    ],
+    "sizes": ["S", "M", "L"],
+    "colors": ["blue", "pink", "green"],
+    "stocks": [
+      [4, 13, 30],
+      [21, 14, 9],
+      [5, 6, 5]
+    ]
+  },
+  {
+    "price": 25,
+    "shelf": "SH-08",
+    "material": "cotton",
+    "type": "t-shirt",
+    "images": [
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty1076/product/media/images/prod/SPM/PIM/20231202/20/6791af5b-7f96-36fc-ab28-e90b37d68e9c/1_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty1078/product/media/images/prod/SPM/PIM/20231202/20/33efb421-d85f-3b77-a2b4-737ef9e033c0/1_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty1027/product/media/images/prod/SPM/PIM/20231028/19/b669ecc8-0772-3535-b4e7-ed04bcfdcdf8/1_org_zoom.jpg"
+    ],
+    "sizes": ["S", "M"],
+    "colors": ["blue", "pink", "white"],
+    "stocks": [
+      [8, 13, 20],
+      [14, 7, 21]
+    ]
+  },
+  {
+    "price": 33,
+    "shelf": "SH-09",
+    "material": "wool",
+    "type": "t-shirt",
+    "images": [
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty979/product/media/images/20230804/15/400164868/871091596/2/2_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty980/product/media/images/20230804/15/400164868/871091599/1/1_org_zoom.jpg"
+    ],
+    "sizes": ["M"],
+    "colors": ["red", "grey"],
+    "stocks": [[8, 5, 13]]
+  },
+  {
+    "price": 42,
+    "shelf": "SH-10",
+    "material": "cotton",
+    "type": "cardigan",
+    "images": [
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty1022/product/media/images/prod/PIM/20231023/16/bad74201-9081-4f6f-a6ab-45eb4e802359/1_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty1056/product/media/images/prod/PIM/20231121/16/378f3e41-d39f-43f5-a28a-c0ff0cd722bb/1_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty1021/product/media/images/prod/PIM/20231023/16/aec770af-296d-45f8-9e5e-7cb306da1c39/1_org_zoom.jpg"
+    ],
+    "sizes": ["M", "L"],
+    "colors": ["brown", "blue", "pink"],
+    "stocks": [
+      [9, 5, 11],
+      [16, 24, 31]
+    ]
+  },
+  {
+    "price": 49,
+    "shelf": "SH-11",
+    "material": "cotton",
+    "type": "sweatshirt",
+    "images": [
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty448/product/media/images/20220607/14/122533526/450280079/2/2_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty613/product/media/images/20221128/15/222771857/607574560/3/3_org_zoom.jpg"
+    ],
+    "sizes": ["S", "L"],
+    "colors": ["green", "white"],
+    "stocks": [
+      [9, 6],
+      [36, 39]
+    ]
+  },
+  {
+    "price": 50,
+    "shelf": "SH-12",
+    "material": "velvet",
+    "type": "shirt",
+    "images": [
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty448/product/media/images/20220607/14/122533526/450280079/2/2_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty613/product/media/images/20221128/15/222771857/607574560/3/3_org_zoom.jpg"
+    ],
+    "sizes": ["S", "M", "L"],
+    "colors": ["yellow", "green"],
+    "stocks": [
+      [3, 14],
+      [36, 39],
+      [40, 21]
+    ]
+  },
+  {
+    "price": 65,
+    "shelf": "SH-13",
+    "material": "leather",
+    "type": "trousers",
+    "images": [
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty494/product/media/images/20220729/16/151994681/432190057/3/3_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty1007/product/media/images/prod/PIM/20230927/13/b5c1ec9b-f97a-4bcc-9c50-91f3ce713e81/1_org_zoom.jpg"
+    ],
+    "sizes": ["S", "L"],
+    "colors": ["black", "green"],
+    "stocks": [
+      [7, 11],
+      [23, 19]
+    ]
+  },
+  {
+    "price": 60,
+    "shelf": "SH-14",
+    "material": "velvet",
+    "type": "trousers",
+    "images": [
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty991/product/media/images/jpim-outputs/assets/product/media/images/20230829/14/408987211/931518394/2/2_org_zoom.jpg"
+    ],
+    "sizes": ["S", "M", "L"],
+    "colors": ["brown"],
+    "stocks": [[7], [27], [18]]
+  },
+  {
+    "price": 47,
+    "shelf": "SH-15",
+    "material": "cotton",
+    "type": "t-shirt",
+    "images": [
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty684/product/media/images/20230113/13/257801463/595726335/2/2_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty649/product/media/images/20221216/17/239344700/595726390/9/9_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty666/product/media/images/20221229/16/248769307/595726353/9/9_org_zoom.jpg"
+    ],
+    "sizes": ["S", "L"],
+    "colors": ["green", "black", "pink"],
+    "stocks": [
+      [50, 14, 2],
+      [20, 10, 5]
+    ]
+  },
+  {
+    "price": 47,
+    "shelf": "SH-16",
+    "material": "linen",
+    "type": "shirt",
+    "images": [
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty458/product/media/images/20220621/9/128315006/218084518/3/3_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty1013/product/media/images/prod/PIM/20231009/09/fbfe20b2-571e-4e22-bfbb-76030888ddf8/1_org_zoom.jpg"
+    ],
+    "sizes": ["L"],
+    "colors": ["purple", "blue"],
+    "stocks": [[20, 19]]
+  },
+  {
+    "price": 50,
+    "shelf": "SH-17",
+    "material": "linen",
+    "type": "shirt",
+    "images": [
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty519/product/media/images/20220902/16/168578179/62876954/3/3_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty471/product/media/images/20220708/16/137176553/198074483/3/3_org_zoom.jpg"
+    ],
+    "sizes": ["M", "L"],
+    "colors": ["black", "blue"],
+    "stocks": [
+      [40, 12],
+      [29, 3]
+    ]
+  },
+  {
+    "price": 55,
+    "shelf": "SH-18",
+    "material": "wool",
+    "type": "sweater",
+    "images": [
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty954/product/media/images/20230622/13/388129968/875634364/4/4_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty917/product/media/images/20230530/9/371016998/875634341/2/2_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty918/product/media/images/20230530/9/371016998/875634327/2/2_org_zoom.jpg"
+    ],
+    "sizes": ["S", "L"],
+    "colors": ["blue", "black", "white"],
+    "stocks": [
+      [30, 12, 13],
+      [22, 7]
+    ]
+  },
+  {
+    "price": 39,
+    "shelf": "SH-19",
+    "material": "cotton",
+    "type": "sweatpants",
+    "images": [
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty1015/product/media/images/prod/PIM/20231017/18/0c0e4468-0d22-475a-89a4-f9cc116155de/1_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty1016/product/media/images/prod/PIM/20231018/18/ee23cda1-41fb-4ad4-9cd4-79c7eb593213/1_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty1016/product/media/images/prod/PIM/20231017/18/f6c0bbd3-de39-40a6-961a-23da196af483/1_org_zoom.jpg"
+    ],
+    "sizes": ["S", "M", "L"],
+    "colors": ["red", "brown", "black"],
+    "stocks": [
+      [23, 12, 14],
+      [20, 7, 17],
+      [4, 9, 11]
+    ]
+  },
+  {
+    "price": 45,
+    "shelf": "SH-20",
+    "material": "cotton",
+    "type": "shirt",
+    "images": [
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty691/product/media/images/20230116/13/259785136/592889149/3/3_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty692/product/media/images/20230116/13/259785136/126125135/3/3_org_zoom.jpg"
+    ],
+    "sizes": ["M", "L"],
+    "colors": ["pink", "blue"],
+    "stocks": [
+      [25, 17],
+      [15, 17]
+    ]
+  },
+  {
+    "price": 53,
+    "shelf": "SH-21",
+    "material": "viscose",
+    "type": "trousers",
+    "images": [
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty521/product/media/images/20220902/16/168582718/516078840/4/4_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty973/product/media/images/20230726/13/396931060/327358373/4/4_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty973/product/media/images/20230726/13/396931060/327358344/2/2_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty991/product/media/images/jpim-outputs/assets/product/media/images/20230829/14/408987211/931937121/4/4_org_zoom.jpg"
+    ],
+    "sizes": ["S", "M"],
+    "colors": ["brown", "blue", "yellow", "purple"],
+    "stocks": [
+      [31, 12, 6, 7],
+      [9, 17, 8, 5]
+    ]
+  },
+  {
+    "price": 38,
+    "shelf": "SH-22",
+    "material": "viscose",
+    "type": "skirt",
+    "images": [
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty715/product/media/images/20230204/14/273413681/587520607/3/3_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty714/product/media/images/20230204/14/273413681/587520067/3/3_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty975/product/media/images/20230802/14/399394496/931086269/4/4_org_zoom.jpg"
+    ],
+    "sizes": ["M"],
+    "colors": ["pink", "blue", "green"],
+    "stocks": [[30, 16, 3]]
+  },
+  {
+    "price": 54,
+    "shelf": "SH-23",
+    "material": "viscose",
+    "type": "jacket",
+    "images": [
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty977/product/media/images/20230802/14/399394496/935644179/3/3_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty691/product/media/images/20230116/13/259785136/612557378/2/2_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty658/product/media/images/20221221/23/243590322/612557453/2/2_org_zoom.jpg"
+    ],
+    "sizes": ["S", "M", "L"],
+    "colors": ["blue", "purple", "pink"],
+    "stocks": [
+      [14, 4, 3],
+      [13, 14, 19],
+      [2, 5, 9]
+    ]
+  },
+  {
+    "price": 39,
+    "shelf": "SH-24",
+    "material": "cotton",
+    "type": "sweatshirt",
+    "images": [
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty1014/product/media/images/prod/PIM/20231018/18/92c1d6a0-b6ca-4c7a-a924-b0fe7d3c1d0f/1_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty1017/product/media/images/prod/PIM/20231020/18/8660d71a-f5f1-4be7-a232-1aed41414235/1_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty1018/product/media/images/prod/PIM/20231020/18/fbe02e97-efdc-4a77-8369-7c4c76b25ee3/1_org_zoom.jpg"
+    ],
+    "sizes": ["M", "L"],
+    "colors": ["green", "purple", "brown"],
+    "stocks": [
+      [23, 25, 16],
+      [7, 8, 7]
+    ]
+  },
+  {
+    "price": 44,
+    "shelf": "SH-25",
+    "material": "wool",
+    "type": "sweater",
+    "images": [
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty584/product/media/images/20221102/8/205589789/559992023/2/2_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty943/product/media/images/20230606/10/381666624/847657647/2/2_org_zoom.jpg",
+      "https://cdn.dsmcdn.com/mnresize/1200/1800/ty438/product/media/images/20220523/18/115269955/401582671/3/3_org_zoom.jpg"
+    ],
+    "sizes": ["S"],
+    "colors": ["blue", "pink", "green"],
+    "stocks": [[8, 19, 14]]
   }
 ]

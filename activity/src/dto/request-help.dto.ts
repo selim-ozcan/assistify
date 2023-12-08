@@ -1,4 +1,5 @@
 import { IsNotEmpty, IsString, IsOptional } from 'class-validator';
+import { Product } from 'src/models/product.model';
 
 export class RequestHelpDto {
   @IsString()
@@ -16,4 +17,7 @@ export class RequestHelpDto {
   @IsString()
   @IsOptional()
   quickQuestion: string;
+
+  @IsOptional()
+  product: Product;
 }

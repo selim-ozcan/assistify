@@ -58,7 +58,7 @@ export default function Hello({ products }) {
                           {value.map((color, index) => (
                             <Radio
                               key={index}
-                              name={color + index}
+                              name={product["_id"] + color + index}
                               color={color}
                               defaultChecked={true}
                               labelProps={{ className: "px-1 py-1" }}
