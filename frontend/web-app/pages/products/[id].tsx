@@ -32,10 +32,9 @@ type ProductProps = {
 };
 
 const quickQuestions = [
-  "asdfa asdfas sfafasf asdfasfa?",
-  "adfa asdfa sf asdfa asdf?",
   "Is the material used in this product 100% pure?",
   "Which year's creation does this product belong to?",
+  "In how many days can I change the product?",
   "What are the return conditions for this product?",
 ];
 
@@ -64,8 +63,6 @@ export default function Product() {
   const [choosenColor, setChoosenColor] = useState(null);
   const [choosenSize, setChoosenSize] = useState(null);
 
-  console.log(choosenSize);
-  console.log(choosenColor);
   const triggers = {
     onMouseEnter: () => setOpenPopover(true),
     onMouseLeave: () => setOpenPopover(false),
@@ -83,23 +80,26 @@ export default function Product() {
 
   useEffect(() => {
     function listener(data) {
-      setHelpingEmployeeId(data.employeeId);
-      setVisible(false);
-      setHelpComing(true);
-      if (
-        data.quickAnswer !== null &&
-        data.quickAnswer !== undefined &&
-        data.quickAnswer !== ""
-      ) {
-        toast.success(
-          `${
-            data.email.slice(0, 6) + "******.com"
-          } has answered your question!`,
-          { duration: 4000 }
-        );
-        setQuickAnswerArrived(true);
-        setQuickAnswerSeen(false);
-        setQuickAnswer(data.quickAnswer);
+      if (data.userId === user.userId) {
+        setHelpingEmployeeId(data.employeeId);
+        setVisible(false);
+        setHelpComing(true);
+
+        if (
+          data.quickAnswer !== null &&
+          data.quickAnswer !== undefined &&
+          data.quickAnswer !== ""
+        ) {
+          toast.success(
+            `${
+              data.email.slice(0, 6) + "******.com"
+            } has answered your question!`,
+            { duration: 4000 }
+          );
+          setQuickAnswerArrived(true);
+          setQuickAnswerSeen(false);
+          setQuickAnswer(data.quickAnswer);
+        }
       }
     }
 
@@ -120,7 +120,7 @@ export default function Product() {
     });
 
     const time = new Date();
-    time.setSeconds(time.getSeconds() + 15);
+    time.setSeconds(time.getSeconds() + 30);
     restart(time);
   }
 
@@ -180,7 +180,7 @@ export default function Product() {
     });
 
     const time = new Date();
-    time.setSeconds(time.getSeconds() + 15);
+    time.setSeconds(time.getSeconds() + 30);
     restart(time);
 
     setOpenPopover(false);

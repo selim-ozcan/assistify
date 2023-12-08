@@ -17,15 +17,19 @@ import {
   Radio,
 } from "@material-tailwind/react";
 import toast, { Toaster } from "react-hot-toast";
+import HelpElement from "@/components/HelpElement";
 
 export default function Queue() {
   const { user, setUser } = useContext(UserContext);
-  const [clicked, setClicked] = useState({ userId: null });
+  const [clicked, setClicked] = useState({ userId: null, shelf: null });
   const [queue, setQueue] = useState([]);
   const [requestType, setRequestType] = useState("quick");
   const [quickHelpDialogOpen, setQuickHelpDialogOpen] = useState(false);
   const [quickQuestionAnswer, setQuickQuestionAnswer] = useState("");
-  const [lastAnsweredQuestion, setLastAnsweredQuestion] = useState(null);
+  const [lastAnsweredQuestion, setLastAnsweredQuestion] = useState({
+    userId: null,
+    shelf: null,
+  });
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
@@ -33,48 +37,72 @@ export default function Queue() {
     function listener(data) {
       if (data.product !== null && data.product !== undefined)
         setProduct(data.product);
+
       setQueue((prev) => [...prev, data]);
     }
+
+    function helpComingListener(data) {
+      setQueue((prev) =>
+        prev.filter(
+          (req) => req.userId !== data.userId && req.shelf !== data.shelf
+        )
+      );
+    }
+
     socket.on("help-requested", listener);
+    socket.on("help-coming", helpComingListener);
 
     return () => {
       socket.off("help-requested", listener);
+      socket.off("help-coming", listener);
     };
   }, []);
 
-  function onHelpButtonClick(userId) {
+  function onHelpButtonClick(userId, shelf) {
     if (requestType === "quick") {
-      onQuickHelpDialogOpen(userId);
+      onQuickHelpDialogOpen(userId, shelf);
     }
     if (requestType === "facetoface") {
-      onHelpComing(userId);
+      onHelpComing(userId, shelf);
     }
   }
 
-  function onQuickHelpDialogOpen(userId) {
-    setClicked({ userId });
+  function onQuickHelpDialogOpen(userId, shelf) {
+    setClicked({ userId, shelf });
     setQuickHelpDialogOpen((prev) => !prev);
   }
 
-  function onHelpComing(userId) {
-    setClicked({ userId });
+  function onHelpComing(userId, shelf) {
+    setClicked({ userId: userId, shelf: shelf });
     setTimeout(() => {
-      setQueue(queue.filter((el) => el.userId !== userId));
-      setClicked({ userId: null });
+      setQueue(
+        queue.filter((el) => el.userId !== userId && el.shelf !== shelf)
+      );
+      setClicked({ userId: null, shelf: null });
     }, 1000);
 
-    socket.emit("help-coming", { employeeId: user.userId });
+    socket.emit("help-coming", {
+      employeeId: user.userId,
+      email: user.email,
+      userId: userId,
+      shelf: shelf,
+    });
   }
 
-  function onSendQuickAnswer(userId) {
+  function onSendQuickAnswer(element) {
     if (quickQuestionAnswer !== null && quickQuestionAnswer !== "") {
-      setLastAnsweredQuestion(userId);
+      setLastAnsweredQuestion({ userId: element.userId, shelf: element.shelf });
       socket.emit("help-coming", {
+        userId: element.userId,
+        shelf: element.shelf,
         employeeId: user.userId,
         email: user.email,
         quickAnswer: quickQuestionAnswer,
       });
       setQuickHelpDialogOpen(false);
+      setTimeout(() => {
+        setClicked({ userId: null, shelf: null });
+      }, 1000);
       toast.success("Answer sent successfully");
     }
   }
@@ -101,47 +129,20 @@ export default function Queue() {
         </ButtonGroup>
 
         {queue.map((el, index) => {
-          const incomingRequestType =
-            el.quickQuestion === "" ||
-            el.quickQuestion === null ||
-            el.quickQuestion === undefined
-              ? "facetoface"
-              : "quick";
-
-          if (incomingRequestType === requestType)
-            return (
-              <button
-                key={index}
-                onClick={() => onHelpButtonClick(el.userId)}
-                className={`$w-3/4 h-12 inline-block shadow-md shadow-blue-gray-900 ${
-                  requestType === "facetoface" ? "bg-[#cbdca9]" : "bg-teal-200"
-                } m-2 text-center rounded-md px-4 text-black transition-all ${
-                  requestType === "facetoface"
-                    ? clicked.userId === el.userId
-                      ? "translate-x-8 opacity-0"
-                      : ""
-                    : lastAnsweredQuestion === el.userId
-                    ? "translate-x-8 opacity-0"
-                    : ""
-                }`}
-              >
-                {incomingRequestType === "facetoface"
-                  ? `${el.email.slice(0, 6) + "******.com"}`
-                  : ""}
-
-                {incomingRequestType === "quick" ? (
-                  `Tap to see question from:
-                  ${el.email.slice(0, 6) + "******.com"} `
-                ) : (
-                  <>
-                    {" "}
-                    <span>requested help</span>
-                    <br />
-                    <span className="">{` from shelf: ${el.shelf}`}</span>
-                  </>
-                )}
-              </button>
-            );
+          return (
+            <HelpElement
+              key={index}
+              el={el}
+              clicked={clicked}
+              lastAnsweredQuestion={lastAnsweredQuestion}
+              requestType={requestType}
+              onHelpButtonClick={onHelpButtonClick}
+              queue={queue}
+              userId={clicked.userId}
+              shelf={el.shelf}
+              setQueue={setQueue}
+            ></HelpElement>
+          );
         })}
       </Card>
       <Dialog
@@ -280,7 +281,10 @@ export default function Queue() {
             className={`mb-4 ${quickQuestionAnswer === "" ? "disabled" : ""}`}
             onClick={() =>
               onSendQuickAnswer(
-                queue.find((q) => clicked.userId === q.userId)?.userId
+                queue.find(
+                  (q) =>
+                    clicked.userId === q.userId && clicked.shelf === q.shelf
+                )
               )
             }
           >
