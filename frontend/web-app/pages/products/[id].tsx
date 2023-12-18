@@ -26,6 +26,7 @@ import { useContext, useEffect, useState } from "react";
 import { useTimer } from "react-timer-hook";
 import toast, { Toaster } from "react-hot-toast";
 import { createHook } from "async_hooks";
+import CartContext from "@/context/cartContext";
 
 type ProductProps = {
   product: Product;
@@ -41,6 +42,7 @@ const quickQuestions = [
 export default function Product() {
   const params = useParams();
   const { user, setUser } = useContext(UserContext);
+  const { cart, setCart } = useContext(CartContext);
   const [product, setProduct] = useState<Product>();
   const [helpRequested, setHelpRequested] = useState(false);
   const [helpComing, setHelpComing] = useState(false);
@@ -62,6 +64,8 @@ export default function Product() {
 
   const [choosenColor, setChoosenColor] = useState(null);
   const [choosenSize, setChoosenSize] = useState(null);
+
+  console.log(cart);
 
   const triggers = {
     onMouseEnter: () => setOpenPopover(true),
@@ -278,6 +282,7 @@ export default function Product() {
                           prev.find((attr) => attr.hasOwnProperty("size"))
                             .size === size
                         ) {
+                          setChoosenSize(null);
                           return prev.filter(
                             (attr) => !attr.hasOwnProperty("size")
                           );
@@ -322,6 +327,7 @@ export default function Product() {
                           prev.find((attr) => attr.hasOwnProperty("color"))
                             .color === color
                         ) {
+                          setChoosenColor(null);
                           return prev.filter(
                             (attr) => !attr.hasOwnProperty("color")
                           );
@@ -485,6 +491,38 @@ export default function Product() {
               ? "Rate your experience"
               : ""}
             {!quickAnswerArrived ? "Rate your experience" : ""}
+          </Button>
+          <Button
+            disabled={
+              !cart.some((item) => item._id === product._id) &&
+              (choosenColor === null || choosenSize === null)
+            }
+            ripple={false}
+            fullWidth={true}
+            className={` text-black bg-light-blue-700 mx-auto w-2/3 shadow-none  hover:shadow-none  focus:shadow-none active:scale-100 mt-2`}
+            onClick={() => {
+              if (cart.some((item) => item._id === product._id)) {
+                setCart((prev) =>
+                  prev.filter((item) => item._id !== product._id)
+                );
+                toast.success("Removed from Cart");
+              } else {
+                setCart((prev) => [
+                  ...prev,
+                  {
+                    ...product,
+                    color: choosenColor,
+                    size: choosenSize,
+                    image: product.images[choosenColor],
+                  },
+                ]);
+                toast.success("Added to Cart");
+              }
+            }}
+          >
+            {cart.some((item) => item._id === product._id)
+              ? "Remove from Cart"
+              : "Add to Cart"}
           </Button>
           <Toaster></Toaster>
         </CardFooter>

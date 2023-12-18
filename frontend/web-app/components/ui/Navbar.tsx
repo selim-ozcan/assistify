@@ -25,6 +25,7 @@ import {
   PowerIcon,
   RocketLaunchIcon,
   Bars2Icon,
+  ShoppingCartIcon,
 } from "@heroicons/react/24/solid";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -34,12 +35,8 @@ import { useRouter } from "next/router";
 // profile menu component
 const profileMenuItems = [
   {
-    label: "My Profile",
-    icon: UserCircleIcon,
-  },
-  {
-    label: "Help",
-    icon: LifebuoyIcon,
+    label: "Cart",
+    icon: ShoppingCartIcon,
   },
   {
     label: "Sign Out",
@@ -82,12 +79,20 @@ function ProfileMenu(props: any) {
       <MenuList className="p-1">
         {profileMenuItems.map(({ label, icon }, key) => {
           const isLastItem = key === profileMenuItems.length - 1;
+          const isFirstItem = key === 0;
           return (
             <MenuItem
               key={label}
               onClick={() => {
-                if (isLastItem) router.push("/auth/signin");
-                closeMenu(label);
+                if (isLastItem) {
+                  router.push("/auth/signin");
+                  closeMenu(label);
+                }
+
+                if (isFirstItem) {
+                  router.push("/cart");
+                  setIsMenuOpen(false);
+                }
               }}
               className={`flex items-center gap-2 rounded ${
                 isLastItem

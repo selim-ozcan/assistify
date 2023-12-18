@@ -19,9 +19,6 @@ export class ProductsService {
   }
 
   async update(_id: string, updateProductDto: UpdateProductDto) {
-    const product = await this.productsRepository.findOne({ _id });
-    const updatedProduct = { ...product, ...updateProductDto };
-
-    return updatedProduct;
+    await this.productsRepository.update(_id, updateProductDto);
   }
 }

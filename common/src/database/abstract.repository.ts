@@ -36,4 +36,8 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
 
     return await this.model.find(filter);
   }
+
+  async update(_id: string, updateDto: Partial<TDocument>) {
+    return await this.model.findOneAndUpdate({ _id }, updateDto);
+  }
 }

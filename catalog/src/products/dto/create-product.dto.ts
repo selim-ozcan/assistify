@@ -23,5 +23,5 @@ export class CreateProductDto {
   colors: string[];
 
   @IsArray()
-  stocks: number[];
+  stocks: any[];
 }
