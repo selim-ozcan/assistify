@@ -15,8 +15,10 @@ export default function HelpElement({
   const { seconds, restart } = useTimer({
     expiryTimestamp: new Date(),
     onExpire: () => {
+      console.log(userId);
+      console.log(shelf);
       setQueue(
-        queue.filter((el) => el.userId !== userId && el.shelf !== shelf)
+        queue.filter((el) => !(el.userId === userId && el.shelf === shelf))
       );
     },
   });

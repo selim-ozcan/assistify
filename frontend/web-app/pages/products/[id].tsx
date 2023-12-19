@@ -170,7 +170,11 @@ export default function Product() {
     if (textQuickQuestion !== "") {
       question = textQuickQuestion;
     } else if (chosenQuickQuestion !== null) {
-      question = quickQuestions[chosenQuickQuestion];
+      if (chosenQuickQuestion === 4) {
+        question = "Where can I find the stock for this product?";
+      } else {
+        question = quickQuestions[chosenQuickQuestion];
+      }
     }
 
     setHelpRequested((prev) => !prev);
@@ -190,7 +194,8 @@ export default function Product() {
     setOpenPopover(false);
     setOpenQuickHelpPopover(false);
   }
-
+  console.log(textQuickQuestion);
+  console.log(chosenQuickQuestion);
   if (!product) return <h1>loading...</h1>;
 
   return (

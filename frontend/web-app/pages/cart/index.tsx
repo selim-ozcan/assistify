@@ -175,7 +175,12 @@ export default function Cart() {
               label={"Write your shipping address"}
               onChange={(e) => setAddress(e.target.value)}
             ></Textarea>
-            <div className="flex items-center justify-between w-[95%]">
+            <div className="mt-4 flex justify-center">
+              <span className="text-black text-center text-xl font-bold mt-2 mb-2">
+                Payment Method
+              </span>
+            </div>
+            <div className="flex items-center justify-between w-[95%] mb-2">
               <Radio defaultChecked={true}></Radio>
 
               <div className="flex text-black items-center gap-4">

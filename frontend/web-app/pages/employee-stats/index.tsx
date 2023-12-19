@@ -13,30 +13,200 @@ import {
   Button,
 } from "@material-tailwind/react";
 import { Star } from "@/components/ui/StarRating";
+import PieChart from "@/components/ui/PieChart";
 
 const TABLE_HEAD = ["Name", "Help Count", "Avg. Rate", ""];
-
+const labels = ["ali", "ayşe"];
 export default function EmployeeStats() {
   const { user, setUser } = useContext(UserContext);
   const [stats, setStats] = useState([]);
   const [users, setUsers] = useState([]);
   const [showReview, setShowReview] = useState(false);
   const [reviewOfUser, setReviewOfUser] = useState(null);
+  const [chartConfig, setChartConfig] = useState({
+    type: "pie",
+    width: 280,
+    height: 280,
+    options: {
+      title: {
+        show: "",
+      },
+
+      colors: ["#020617", "#ff8f00"],
+      legend: {
+        show: true,
+        position: "bottom",
+        formatter: (val, opts) => {
+          return labels[opts.seriesIndex];
+        },
+      },
+      labels: [],
+    },
+    series: [],
+  });
+
+  const [barChartConfig, setBarChartConfig] = useState({
+    type: "bar",
+    height: 240,
+    series: [
+      {
+        name: "Avg. Rating",
+        data: [1, 1],
+      },
+    ],
+    options: {
+      chart: {
+        toolbar: {
+          show: false,
+        },
+      },
+      title: {
+        show: "",
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      colors: ["#020617"],
+      plotOptions: {
+        bar: {
+          columnWidth: "40%",
+          borderRadius: 2,
+        },
+      },
+      xaxis: {
+        axisTicks: {
+          show: false,
+        },
+        axisBorder: {
+          show: false,
+        },
+        labels: {
+          style: {
+            colors: "#616161",
+            fontSize: "12px",
+            fontFamily: "inherit",
+            fontWeight: 400,
+          },
+        },
+        categories: labels,
+      },
+      yaxis: {
+        labels: {
+          style: {
+            colors: "#616161",
+            fontSize: "12px",
+            fontFamily: "inherit",
+            fontWeight: 400,
+          },
+        },
+      },
+      grid: {
+        show: true,
+        borderColor: "#dddddd",
+        strokeDashArray: 5,
+        xaxis: {
+          lines: {
+            show: true,
+          },
+        },
+        padding: {
+          top: 5,
+          right: 20,
+        },
+      },
+      fill: {
+        opacity: 0.8,
+      },
+      tooltip: {
+        theme: "dark",
+      },
+    },
+  });
 
   useEffect(() => {
-    fetch(`http://localhost:3000/rating`, {
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setStats(data);
-      });
-
     fetch(`http://localhost:3001/users/all`, {
       credentials: "include",
     })
       .then((res) => res.json())
-      .then((data) => setUsers(data));
+      .then((data) => {
+        setUsers(data);
+        setChartConfig((prev) => {
+          const toReturn = {
+            ...prev,
+            labels: data
+              .filter((user) => user.role === "employee")
+              .map((emp) => emp.email.split("@")[0])
+              .sort(),
+          };
+          toReturn.options.labels = data
+            .filter((user) => user.role === "employee")
+            .map((emp) => emp.email.split("@")[0])
+            .sort();
+
+          return toReturn;
+        });
+        return data;
+      })
+      .then((users) => {
+        fetch(`http://localhost:3000/rating`, {
+          credentials: "include",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            setStats(data);
+
+            setBarChartConfig((prev) => {
+              const employees = users.filter(
+                (user) => user.role === "employee"
+              );
+
+              const barChartData = employees.map((user) => {
+                const employeeStats = data.filter(
+                  (stat) => stat.employeeId === user._id
+                );
+                const totalRatingsForTheEmployee = employeeStats.reduce(
+                  (prev, curr) => +prev + +curr.rate,
+                  0
+                );
+                const averageRatingOfTheEmployee =
+                  totalRatingsForTheEmployee / employeeStats.length;
+
+                return averageRatingOfTheEmployee.toFixed(2);
+              });
+
+              const toReturn = ({ ...prev }.series[0].data = barChartData);
+              return toReturn;
+            });
+
+            setChartConfig((prev) => {
+              const employees = users.filter(
+                (user) => user.role === "employee"
+              );
+
+              employees.sort((a, b) => {
+                if (a.email.split("@")[0] < b.email.split("@")[0]) {
+                  return -1;
+                }
+                if (a.email.split("@")[0] > b.email.split("@")[0]) {
+                  return 1;
+                }
+
+                return 0;
+              });
+
+              const series = employees.map((emp) => {
+                return data.filter((review) => review.employeeId === emp._id)
+                  .length;
+              });
+              const toReturn = {
+                ...prev,
+                series,
+              };
+
+              return toReturn;
+            });
+          });
+      });
   }, []);
 
   function calculateStats(employeeId) {
@@ -70,7 +240,16 @@ export default function EmployeeStats() {
   return (
     <>
       <Card className="h-[74vh] my-2 mx-2 py-4 w-full overflow-scroll">
-        <h2 className="mb-4 text-center">Employee Review Statistics</h2>
+        <div className="flex flex-col mx-auto w-[74%] justfiy-center mb-4">
+          <h2 className="-ml-2 text-black text-center">Help Statistics</h2>
+          <PieChart chartConfig={chartConfig}></PieChart>
+        </div>
+
+        <div className="flex flex-col mx-auto w-[74%] justfiy-center mb-4 ml-10">
+          <h2 className="-ml-2 text-black text-center">Review Statistics</h2>
+          <PieChart chartConfig={barChartConfig}></PieChart>
+        </div>
+
         <table className="w-[90%] min-w-max table-auto text-left overflow-scroll mx-2">
           <thead>
             <tr>

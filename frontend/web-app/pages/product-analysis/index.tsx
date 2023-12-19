@@ -32,7 +32,7 @@ export default function ProductAnalysis() {
 
   return (
     <>
-      <Card className="mx-1 my-1">
+      <Card className="mx-1 my-1 h-full">
         <div className="relative flex w-[90%] mx-auto max-w-[24rem] mt-4 mb-4">
           <Input
             type="string"

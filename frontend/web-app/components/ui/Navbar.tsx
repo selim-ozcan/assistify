@@ -131,25 +131,29 @@ const navListItems = [
 function NavList(props) {
   return (
     <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
-      {navListItems.map(({ label, icon }, key) => (
-        <Link
-          key={label}
-          onClick={() => props.onElementClick()}
-          href={"/products/scanner"}
-        >
-          <Typography
-            href="#"
-            variant="small"
-            color="gray"
-            className="font-medium text-blue-gray-500"
-          >
-            <MenuItem className="flex items-center gap-2 lg:rounded-full">
-              {React.createElement(icon, { className: "h-[18px] w-[18px]" })}{" "}
-              <span className="text-gray-900"> {label}</span>
-            </MenuItem>
-          </Typography>
-        </Link>
-      ))}
+      {props?.user?.role !== "manager"
+        ? navListItems.map(({ label, icon }, key) => (
+            <Link
+              key={label}
+              onClick={() => props.onElementClick()}
+              href={"/products/scanner"}
+            >
+              <Typography
+                href="#"
+                variant="small"
+                color="gray"
+                className="font-medium text-blue-gray-500"
+              >
+                <MenuItem className="flex items-center gap-2 lg:rounded-full">
+                  {React.createElement(icon, {
+                    className: "h-[18px] w-[18px]",
+                  })}{" "}
+                  <span className="text-gray-900"> {label}</span>
+                </MenuItem>
+              </Typography>
+            </Link>
+          ))
+        : null}
       {props?.user?.role === "employee" ? (
         <Link
           key={"Customer Queue"}

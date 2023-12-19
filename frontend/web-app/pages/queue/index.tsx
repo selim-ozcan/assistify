@@ -44,7 +44,7 @@ export default function Queue() {
     function helpComingListener(data) {
       setQueue((prev) =>
         prev.filter(
-          (req) => req.userId !== data.userId && req.shelf !== data.shelf
+          (req) => req.userId !== data.userId || req.shelf !== data.shelf
         )
       );
     }
@@ -76,7 +76,7 @@ export default function Queue() {
     setClicked({ userId: userId, shelf: shelf });
     setTimeout(() => {
       setQueue(
-        queue.filter((el) => el.userId !== userId && el.shelf !== shelf)
+        queue.filter((el) => el.userId !== userId || el.shelf !== shelf)
       );
       setClicked({ userId: null, shelf: null });
     }, 1000);
@@ -131,14 +131,14 @@ export default function Queue() {
         {queue.map((el, index) => {
           return (
             <HelpElement
-              key={index}
+              key={`${el.userId}${el.shelf}`}
               el={el}
               clicked={clicked}
               lastAnsweredQuestion={lastAnsweredQuestion}
               requestType={requestType}
               onHelpButtonClick={onHelpButtonClick}
               queue={queue}
-              userId={clicked.userId}
+              userId={el.userId}
               shelf={el.shelf}
               setQueue={setQueue}
             ></HelpElement>
