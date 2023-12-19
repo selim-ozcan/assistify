@@ -10,18 +10,22 @@ import {
   Card,
   CardHeader,
   CardBody,
+  Radio,
 } from "@material-tailwind/react";
 import toast, { Toaster } from "react-hot-toast";
 import Image from "next/image";
 import { profile } from "console";
+import UserContext from "@/context/store";
 
 export default function Cart() {
+  const { user, setUser } = useContext(UserContext);
   const { cart, setCart } = useContext(CartContext);
   const router = useRouter();
   const [quantities, setQuantities] = useState(
     Array.from({ length: cart.length }, () => 1)
   );
   const [address, setAddress] = useState("");
+  const shippingCost = 5;
   return (
     <div>
       <h1 className="text-black text-center text-3xl mt-6 mb-10">Your Cart</h1>
@@ -109,7 +113,7 @@ export default function Cart() {
                           })
                         }
                       >
-                        {Array.from({ length: 50 }, (_, i) => (
+                        {Array.from({ length: 10 }, (_, i) => (
                           <option key={i} value={i + 1}>
                             {i + 1}
                           </option>
@@ -146,6 +150,15 @@ export default function Cart() {
                 <hr className="h-[2px] my-3 bg-gray-300 border-1 dark:bg-gray-400" />
               </div>
             ))}
+            <div>
+              <div className="flex justify-between">
+                <div className="text-gray-500 text-sm">
+                  <span className="capitalize">Shipping Cost</span>
+                </div>
+                <span>${shippingCost}</span>
+              </div>
+              <hr className="h-[2px] my-3 bg-gray-300 border-1 dark:bg-gray-400" />
+            </div>
             <div className="flex justify-between mt-6 mb-6">
               <span className="text-black text-xl font-bold">Total</span>
               <span className="text-black text-xl font-bold">
@@ -154,13 +167,39 @@ export default function Cart() {
                   (acc, product, index) =>
                     acc + product.price * quantities[index],
                   0
-                )}
+                ) + shippingCost}
               </span>
             </div>
+
             <Textarea
               label={"Write your shipping address"}
               onChange={(e) => setAddress(e.target.value)}
             ></Textarea>
+            <div className="flex items-center justify-between w-[95%]">
+              <Radio defaultChecked={true}></Radio>
+
+              <div className="flex text-black items-center gap-4">
+                <span>
+                  {user.email.startsWith("selim")
+                    ? "4514 **** **** ****"
+                    : "5615 **** **** ****"}
+                </span>{" "}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z"
+                  />
+                </svg>
+              </div>
+            </div>
             <Button
               disabled={address === ""}
               className="mt-4 w-[90%] self-center"

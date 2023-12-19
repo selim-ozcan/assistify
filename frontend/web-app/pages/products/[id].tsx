@@ -444,6 +444,22 @@ export default function Product() {
                           {question}
                         </Button>
                       ))}
+                      {product.stocks.flat().findIndex((s) => s === 0) !==
+                      -1 ? (
+                        <Button
+                          onClick={() =>
+                            setChosenQuickQuestion(quickQuestions.length)
+                          }
+                          key={quickQuestions.length}
+                          className={`mt-2 inline-block w-full normal-case first-letter:uppercase bg-blue-gray-900 last:mb-2 ${
+                            quickQuestions.length === chosenQuickQuestion
+                              ? "bg-gradient-to-br from-light-green-400 to-light-green-700 border  border-white"
+                              : ""
+                          }`}
+                        >
+                          {"Where can I find the stock for this product?"}
+                        </Button>
+                      ) : null}
                     </div>
                     <h4 className="text-blue-gray-50 mb-1">Or,</h4>
 
@@ -494,8 +510,12 @@ export default function Product() {
           </Button>
           <Button
             disabled={
-              !cart.some((item) => item._id === product._id) &&
-              (choosenColor === null || choosenSize === null)
+              (!cart.some((item) => item._id === product._id) &&
+                (choosenColor === null || choosenSize === null)) ||
+              (!cart.some((item) => item._id !== product._id) &&
+                choosenSize !== null &&
+                choosenColor !== null &&
+                product?.stocks[choosenSize][choosenColor] === 0)
             }
             ripple={false}
             fullWidth={true}
