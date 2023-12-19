@@ -444,7 +444,7 @@ export default function Product() {
                           {question}
                         </Button>
                       ))}
-                      {product.stocks.flat().findIndex((s) => s === 0) !==
+                      {product?.stocks?.flat().findIndex((s) => s === 0) !==
                       -1 ? (
                         <Button
                           onClick={() =>

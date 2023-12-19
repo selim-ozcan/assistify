@@ -45,3 +45,16 @@ services:
       - 4000:4000
     volumes:
       - ./activity:/usr/src/app
+  statistics:
+    build:
+      context: statistics
+      dockerfile: Dockerfile
+      target: development
+    command: npm run start:dev
+    env_file:
+      - ./statistics/.env
+    ports:
+      - 3005:3005
+      - 4001:4001
+    volumes:
+      - ./statistics:/usr/src/app
