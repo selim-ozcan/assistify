@@ -12,10 +12,15 @@ export class CustomerAnalysisService {
   ) {}
 
   async findAllSales(productId: string) {
-    return await this.saleRepository.find({ productId });
+    console.log(productId);
+    return (await this.saleRepository.find({})).filter(
+      (s) => s.productId === productId,
+    );
   }
   async findAllScans(productId: string) {
-    return await this.scanRepository.find({ productId });
+    return (await this.scanRepository.find({})).filter(
+      (s) => s.productId === productId,
+    );
   }
   createSale(createSaleDto: CreateSaleDto) {
     const sale = {

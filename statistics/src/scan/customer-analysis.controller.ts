@@ -25,13 +25,14 @@ export class CustomerAnalysisController {
 
   @UseGuards(CommonAuthGuard)
   @Get('scan/:productId')
-  findAllScans(@Param() productId: string) {
+  findAllScans(@Param('productId') productId: string) {
     return this.customerAnalysisService.findAllScans(productId);
   }
 
   @UseGuards(CommonAuthGuard)
   @Get('sale/:productId')
-  findAllSales(@Param() productId: string) {
+  findAllSales(@Param('productId') productId: string) {
+    console.log(productId);
     return this.customerAnalysisService.findAllSales(productId);
   }
 }

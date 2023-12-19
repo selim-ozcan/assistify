@@ -226,6 +226,27 @@ export default function Cart() {
                   }
                 });
                 if (!error) {
+                  let arr = [];
+
+                  cart.forEach((product, index) => {
+                    for (let i = 0; i < quantities[index]; i++) {
+                      arr.push(
+                        fetch(`http://localhost:3005/statistics/sale`, {
+                          credentials: "include",
+                          method: "POST",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({
+                            customerId: user.userId,
+                            customerEmail: user.email,
+                            productId: product._id,
+                          }),
+                        })
+                      );
+                    }
+                  });
+
+                  Promise.all(arr).then();
+
                   Promise.all(
                     cart.map((product, index) => {
                       const newStocks = [...product.stocks];
