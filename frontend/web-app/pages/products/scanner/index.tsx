@@ -1,8 +1,10 @@
+import UserContext from "@/context/store";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { QrReader } from "react-qr-reader";
 
 export default function Scanner(props: any) {
+  const { user, setUser } = useContext(UserContext);
   const [data, setData] = useState("No result");
   const router = useRouter();
 
@@ -16,7 +18,17 @@ export default function Scanner(props: any) {
           onResult={(result, error) => {
             if (!!result) {
               setData(result?.getText());
-              router.push(`/products/${result}`);
+              fetch(`http://localhost:3005/statistics/scan`, {
+                credentials: "include",
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  customerId: user.userId,
+                  customerEmail: user.email,
+                  productId: result?.getText(),
+                }),
+              }).then();
+              router.push(`/products/${result?.getText()}`);
             }
 
             if (!!error) {

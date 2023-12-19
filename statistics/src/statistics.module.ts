@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { RatingModule } from './rating/rating.module';
+import { CustomerAnalysisModule } from './scan/customer-analysis.module';
 
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true }), RatingModule],
+  imports: [ConfigModule.forRoot({ isGlobal: true }), CustomerAnalysisModule],
   controllers: [],
   providers: [],
 })

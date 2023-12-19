@@ -192,6 +192,27 @@ function NavList(props) {
           </Typography>
         </Link>
       ) : null}
+      {props?.user?.role === "manager" ? (
+        <Link
+          key={"Product Analysis"}
+          onClick={() => props.onElementClick()}
+          href={"/product-analysis"}
+        >
+          <Typography
+            href="#"
+            variant="small"
+            color="gray"
+            className="font-medium text-blue-gray-500"
+          >
+            <MenuItem className="flex items-center gap-2 lg:rounded-full">
+              {React.createElement(PowerIcon, {
+                className: "h-[18px] w-[18px]",
+              })}{" "}
+              <span className="text-gray-900">Product Analysis</span>
+            </MenuItem>
+          </Typography>
+        </Link>
+      ) : null}
     </ul>
   );
 }

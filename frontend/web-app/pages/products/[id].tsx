@@ -372,6 +372,42 @@ export default function Product() {
           </div>
         </CardBody>
         <CardFooter className="pt-0">
+          <Button
+            disabled={
+              (!cart.some((item) => item._id === product._id) &&
+                (choosenColor === null || choosenSize === null)) ||
+              (!cart.some((item) => item._id !== product._id) &&
+                choosenSize !== null &&
+                choosenColor !== null &&
+                product?.stocks[choosenSize][choosenColor] === 0)
+            }
+            ripple={false}
+            fullWidth={true}
+            className={` text-black bg-light-blue-700 mx-auto w-2/3 shadow-none  hover:shadow-none  focus:shadow-none active:scale-100 mb-2`}
+            onClick={() => {
+              if (cart.some((item) => item._id === product._id)) {
+                setCart((prev) =>
+                  prev.filter((item) => item._id !== product._id)
+                );
+                toast.success("Removed from Cart");
+              } else {
+                setCart((prev) => [
+                  ...prev,
+                  {
+                    ...product,
+                    color: choosenColor,
+                    size: choosenSize,
+                    image: product.images[choosenColor],
+                  },
+                ]);
+                toast.success("Added to Cart");
+              }
+            }}
+          >
+            {cart.some((item) => item._id === product._id)
+              ? "Remove from Cart"
+              : "Add to Cart"}
+          </Button>
           <Popover open={openPopover} handler={setOpenPopover}>
             <PopoverHandler {...triggers}>
               <Button
@@ -508,42 +544,7 @@ export default function Product() {
               : ""}
             {!quickAnswerArrived ? "Rate your experience" : ""}
           </Button>
-          <Button
-            disabled={
-              (!cart.some((item) => item._id === product._id) &&
-                (choosenColor === null || choosenSize === null)) ||
-              (!cart.some((item) => item._id !== product._id) &&
-                choosenSize !== null &&
-                choosenColor !== null &&
-                product?.stocks[choosenSize][choosenColor] === 0)
-            }
-            ripple={false}
-            fullWidth={true}
-            className={` text-black bg-light-blue-700 mx-auto w-2/3 shadow-none  hover:shadow-none  focus:shadow-none active:scale-100 mt-2`}
-            onClick={() => {
-              if (cart.some((item) => item._id === product._id)) {
-                setCart((prev) =>
-                  prev.filter((item) => item._id !== product._id)
-                );
-                toast.success("Removed from Cart");
-              } else {
-                setCart((prev) => [
-                  ...prev,
-                  {
-                    ...product,
-                    color: choosenColor,
-                    size: choosenSize,
-                    image: product.images[choosenColor],
-                  },
-                ]);
-                toast.success("Added to Cart");
-              }
-            }}
-          >
-            {cart.some((item) => item._id === product._id)
-              ? "Remove from Cart"
-              : "Add to Cart"}
-          </Button>
+
           <Toaster></Toaster>
         </CardFooter>
       </Card>

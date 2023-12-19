@@ -7,19 +7,13 @@ export class ScanDocument extends AbstractDocument {
   customerId: string;
 
   @Prop()
+  customerEmail: string;
+
+  @Prop()
   productId: string;
-
-  @Prop()
-  productType: string;
-
-  @Prop()
-  productMaterial: string;
-
-  @Prop()
-  productPrice: number;
 
   @Prop()
   created_at: Date;
 }
 
-export const RatingSchema = SchemaFactory.createForClass(ScanDocument);
+export const ScanSchema = SchemaFactory.createForClass(ScanDocument);
