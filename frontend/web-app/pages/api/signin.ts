@@ -13,7 +13,6 @@ export default async function handler(
     body: JSON.stringify(req.body),
     headers: { "Content-Type": "application/json" },
   });
-  console.log(response.headers.getSetCookie());
   const data = await response.json();
   res.setHeader("Set-Cookie", response.headers.getSetCookie()[0]);
   res.send(data);

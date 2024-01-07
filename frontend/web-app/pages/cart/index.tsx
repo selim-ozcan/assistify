@@ -106,7 +106,6 @@ export default function Cart() {
                         id={`${product._id}`}
                         onChange={(event) =>
                           setQuantities((prev) => {
-                            console.log(prev);
                             const newArray = [...prev];
                             newArray[index] = +event.target.value;
                             return newArray;
@@ -253,7 +252,6 @@ export default function Cart() {
                       newStocks[product.size][product.color] -=
                         quantities[index];
 
-                      console.log(JSON.stringify({ stocks: newStocks }));
                       return fetch(
                         `http://localhost:3000/products/${product._id}`,
                         {
@@ -268,11 +266,10 @@ export default function Cart() {
                     })
                   )
                     .then((e) => {
-                      console.log(e);
                       setCart([]);
                       toast.success("Checkout Successfull!");
                     })
-                    .catch((e) => console.log(e));
+                    .catch((e) => console.error(e));
                 }
               }}
             >

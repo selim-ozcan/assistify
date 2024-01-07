@@ -3,6 +3,7 @@ import { CustomerAnalysisService } from './customer-analysis.service';
 import { CommonAuthGuard } from '@soassistify/common';
 import { CreateScanDto } from './dto/create-scan.dto';
 import { CreateSaleDto } from './dto/create-sale.dto';
+import { CreateQuestionDto } from './dto/create-question.dto';
 
 @Controller('statistics')
 export class CustomerAnalysisController {
@@ -13,7 +14,6 @@ export class CustomerAnalysisController {
   @UseGuards(CommonAuthGuard)
   @Post('scan')
   createScan(@Body() createScanDto: CreateScanDto) {
-    console.log(createScanDto);
     this.customerAnalysisService.createScan(createScanDto);
   }
 
@@ -21,6 +21,12 @@ export class CustomerAnalysisController {
   @Post('sale')
   createSale(@Body() createSaleDto: CreateSaleDto) {
     this.customerAnalysisService.createSale(createSaleDto);
+  }
+
+  @UseGuards(CommonAuthGuard)
+  @Post('question')
+  createQuestion(@Body() createQuestionDto: CreateQuestionDto) {
+    this.customerAnalysisService.createQuestion(createQuestionDto);
   }
 
   @UseGuards(CommonAuthGuard)
@@ -32,7 +38,12 @@ export class CustomerAnalysisController {
   @UseGuards(CommonAuthGuard)
   @Get('sale/:productId')
   findAllSales(@Param('productId') productId: string) {
-    console.log(productId);
     return this.customerAnalysisService.findAllSales(productId);
+  }
+
+  @UseGuards(CommonAuthGuard)
+  @Get('question/:productId')
+  findAllQuestions(@Param('productId') productId: string) {
+    return this.customerAnalysisService.findAllQuestions(productId);
   }
 }

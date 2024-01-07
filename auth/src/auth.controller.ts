@@ -27,7 +27,6 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @MessagePattern('authenticate')
   async authenticate(@Payload() token: any) {
-    console.log(token.Authentication);
     try {
       const payload = await this.authService.validateToken(
         token.Authentication,
@@ -39,7 +38,6 @@ export class AuthController {
           role: payload.role,
         };
     } catch (error) {
-      console.log(error);
       return false;
     }
   }

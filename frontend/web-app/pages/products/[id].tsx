@@ -65,8 +65,6 @@ export default function Product() {
   const [choosenColor, setChoosenColor] = useState(null);
   const [choosenSize, setChoosenSize] = useState(null);
 
-  console.log(cart);
-
   const triggers = {
     onMouseEnter: () => setOpenPopover(true),
     onMouseLeave: () => setOpenPopover(false),
@@ -124,7 +122,7 @@ export default function Product() {
     });
 
     const time = new Date();
-    time.setSeconds(time.getSeconds() + 30);
+    time.setSeconds(time.getSeconds() + 60);
     restart(time);
   }
 
@@ -188,14 +186,13 @@ export default function Product() {
     });
 
     const time = new Date();
-    time.setSeconds(time.getSeconds() + 30);
+    time.setSeconds(time.getSeconds() + 60);
     restart(time);
 
     setOpenPopover(false);
     setOpenQuickHelpPopover(false);
   }
-  console.log(textQuickQuestion);
-  console.log(chosenQuickQuestion);
+
   if (!product) return <h1>loading...</h1>;
 
   return (
@@ -588,6 +585,8 @@ export default function Product() {
               &rarr;{" "}
               {textQuickQuestion !== null && textQuickQuestion !== ""
                 ? textQuickQuestion
+                : chosenQuickQuestion === 4
+                ? "Where can I find the stock for this product?"
                 : quickQuestions[chosenQuickQuestion]}
             </Typography>
           </div>

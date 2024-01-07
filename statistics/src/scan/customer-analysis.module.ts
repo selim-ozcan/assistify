@@ -7,6 +7,8 @@ import { ScanDocument, ScanSchema } from './models/scan.schema';
 import { ScanRepository } from './scan.repository';
 import { SaleRepository } from './sale.repository';
 import { SaleDocument, SaleSchema } from './models/sale.schema';
+import { QuestionDocument, QuestionSchema } from './models/question.schema';
+import { QuestionRepository } from './question.repository';
 
 @Module({
   imports: [
@@ -15,10 +17,16 @@ import { SaleDocument, SaleSchema } from './models/sale.schema';
     DatabaseModule.forFeature([
       { name: ScanDocument.name, schema: ScanSchema },
       { name: SaleDocument.name, schema: SaleSchema },
+      { name: QuestionDocument.name, schema: QuestionSchema },
     ]),
     LoggerModule,
   ],
   controllers: [CustomerAnalysisController],
-  providers: [CustomerAnalysisService, ScanRepository, SaleRepository],
+  providers: [
+    CustomerAnalysisService,
+    ScanRepository,
+    SaleRepository,
+    QuestionRepository,
+  ],
 })
 export class CustomerAnalysisModule {}

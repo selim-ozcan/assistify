@@ -11,12 +11,12 @@ export default function HelpElement({
   userId,
   shelf,
   setQueue,
+  setQuickHelpDialogOpen,
 }) {
   const { seconds, restart } = useTimer({
     expiryTimestamp: new Date(),
     onExpire: () => {
-      console.log(userId);
-      console.log(shelf);
+      setQuickHelpDialogOpen(false);
       setQueue(
         queue.filter((el) => !(el.userId === userId && el.shelf === shelf))
       );
@@ -24,7 +24,7 @@ export default function HelpElement({
   });
   useEffect(() => {
     const time = new Date();
-    time.setSeconds(time.getSeconds() + 30);
+    time.setSeconds(time.getSeconds() + 60);
     restart(time);
   }, [restart]);
 

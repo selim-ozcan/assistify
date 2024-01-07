@@ -141,6 +141,7 @@ export default function Queue() {
               userId={el.userId}
               shelf={el.shelf}
               setQueue={setQueue}
+              setQuickHelpDialogOpen={setQuickHelpDialogOpen}
             ></HelpElement>
           );
         })}
