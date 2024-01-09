@@ -121,6 +121,18 @@ export default function Product() {
       email: user.email,
     });
 
+    fetch(`http://localhost:3005/statistics/question`, {
+      credentials: "include",
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        customerId: user.userId,
+        customerEmail: user.email,
+        productId: product._id,
+        question: "",
+      }),
+    }).then(() => {});
+
     const time = new Date();
     time.setSeconds(time.getSeconds() + 60);
     restart(time);
@@ -138,6 +150,7 @@ export default function Product() {
   function onRate(rating) {
     setShowRating(false);
     setRate(rating);
+
     fetch(`http://localhost:3000/rating`, {
       credentials: "include",
       method: "POST",
@@ -184,6 +197,18 @@ export default function Product() {
       quickQuestion: question,
       product: product,
     });
+
+    fetch(`http://localhost:3005/statistics/question`, {
+      credentials: "include",
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        customerId: user.userId,
+        customerEmail: user.email,
+        productId: product._id,
+        question,
+      }),
+    }).then(() => {});
 
     const time = new Date();
     time.setSeconds(time.getSeconds() + 60);
